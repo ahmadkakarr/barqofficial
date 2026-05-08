@@ -1,0 +1,177 @@
+---
+// src/components/MobileDrawer.astro
+---
+
+<div class="drawer-side z-[100]">
+    <label for="mobile-menu-drawer" class="drawer-overlay"></label>
+
+    <div
+        class="w-full max-w-sm min-h-full bg-white text-black relative overflow-hidden"
+    >
+        <div
+            class="flex justify-between items-center p-4 border-b h-16 absolute top-0 left-0 w-full z-10 bg-white"
+        >
+            <button
+                id="mobile-back-btn"
+                class="hidden text-gray-500 hover:text-black"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-6 h-6"
+                    ><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M15.75 19.5L8.25 12l7.5-7.5"></path></svg
+                >
+            </button>
+            <span
+                id="mobile-menu-title"
+                class="font-bold text-lg hidden absolute left-12">Shop</span
+            >
+
+            <label
+                for="mobile-menu-drawer"
+                class="ml-auto cursor-pointer text-gray-500 hover:text-black"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="w-7 h-7"
+                    ><path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6 18L18 6M6 6l12 12"></path></svg
+                >
+            </label>
+        </div>
+
+        <div class="pt-16 h-full w-full relative">
+            <ul
+                id="mobile-pane-main"
+                class="menu p-0 w-full bg-base-100 text-lg transition-transform duration-300 absolute w-full left-0"
+            >
+                <li><a class="py-4 border-b font-normal">Mobile</a></li>
+                <li><a class="py-4 border-b font-normal">Home Internet</a></li>
+                <li>
+                    <button
+                        id="btn-open-shop"
+                        class="py-4 border-b font-bold flex justify-between rounded-none"
+                    >
+                        Shop <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M8.25 4.5l7.5 7.5-7.5 7.5"></path></svg
+                        >
+                    </button>
+                </li>
+                <li>
+                    <a class="py-4 border-b font-bold flex justify-between"
+                        >Deals <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M8.25 4.5l7.5 7.5-7.5 7.5"></path></svg
+                        ></a
+                    >
+                </li>
+            </ul>
+
+            <ul
+                id="mobile-pane-shop"
+                class="menu p-0 w-full bg-base-100 text-lg transition-transform duration-300 absolute w-full left-full"
+            >
+                <li>
+                    <a class="py-4 border-b font-normal flex justify-between"
+                        >Devices <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M8.25 4.5l7.5 7.5-7.5 7.5"></path></svg
+                        ></a>
+                </li>
+                <li>
+                    <a
+                        class="py-4 border-b font-normal text-red-600 flex justify-between"
+                        >Mobile plans <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M8.25 4.5l7.5 7.5-7.5 7.5"></path></svg
+                        ></a>
+                </li>
+                <li>
+                    <a class="py-4 border-b font-normal flex justify-between"
+                        >Home internet plans <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M8.25 4.5l7.5 7.5-7.5 7.5"></path></svg
+                        ></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Astro will bundle this script automatically
+    const btnOpenShop = document.getElementById("btn-open-shop");
+    const btnBack = document.getElementById("mobile-back-btn");
+    const paneMain = document.getElementById("mobile-pane-main");
+    const paneShop = document.getElementById("mobile-pane-shop");
+    const title = document.getElementById("mobile-menu-title");
+
+    if (btnOpenShop && btnBack) {
+        btnOpenShop.addEventListener("click", () => {
+            paneMain.style.transform = "translateX(-100%)";
+            paneShop.style.transform = "translateX(-100%)";
+            btnBack.classList.remove("hidden");
+            title.classList.remove("hidden");
+        });
+
+        btnBack.addEventListener("click", () => {
+            paneMain.style.transform = "translateX(0)";
+            paneShop.style.transform = "translateX(0)";
+            btnBack.classList.add("hidden");
+            title.classList.add("hidden");
+        });
+    }
+</script>

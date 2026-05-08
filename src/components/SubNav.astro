@@ -1,0 +1,58 @@
+---
+// src/components/SubNav.astro
+
+const subMenus = {
+    prepaid: [
+        { label: "ALL OFFERS", href: "#" },
+        { label: "DATA", href: "#" },
+        { label: "ALL IN ONE OFFERS", href: "#" },
+    ],
+    postpay: [
+        { label: "BILLING", href: "#" },
+        { label: "POSTPAY OFFERS", href: "#" },
+    ],
+};
+---
+
+<div
+    id="subnav-bar"
+    class="sticky top-0 z-50 hidden w-full bg-[#f6f6f6] text-black border-b border-gray-300 shadow-md"
+>
+    <div class="max-w-[1440px] mx-auto px-4 lg:px-8">
+        <ul
+            id="menu-prepaid"
+            class="submenu-list hidden flex items-center gap-8 h-12 text-sm font-semibold"
+        >
+            {
+                subMenus.prepaid.map((item) => (
+                    <li>
+                        <a
+                            href={item.href}
+                            class="hover:text-red-600 transition-colors"
+                        >
+                            {item.label}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+
+        <ul
+            id="menu-postpay"
+            class="submenu-list hidden flex items-center gap-8 h-12 text-sm font-semibold"
+        >
+            {
+                subMenus.postpay.map((item) => (
+                    <li>
+                        <a
+                            href={item.href}
+                            class="hover:text-red-600 transition-colors"
+                        >
+                            {item.label}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+</div>

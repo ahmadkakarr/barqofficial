@@ -1,0 +1,145 @@
+---
+// src/components/Navigation.astro
+import UtilityBar from "./UtilityBar.astro";
+import SubNav from "./SubNav.astro";
+import MobileDrawer from "./MobileDrawer.astro";
+---
+
+<div class="drawer">
+    <input id="mobile-menu-drawer" type="checkbox" class="drawer-toggle" />
+
+    <div class="drawer-content flex flex-col min-h-screen">
+        <header class="w-full flex flex-col relative z-40 bg-white shadow-sm">
+            <UtilityBar />
+
+            <nav
+                class="w-full text-black border-b border-gray-200 h-16 flex items-center"
+            >
+                <div
+                    class="max-w-[1440px] mx-auto w-full px-4 lg:px-8 flex items-center justify-between"
+                >
+                    <div class="flex-none lg:hidden">
+                        <label
+                            for="mobile-menu-drawer"
+                            class="btn btn-square btn-ghost"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                class="inline-block w-6 h-6 stroke-current"
+                                ><path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16"></path></svg
+                            >
+                        </label>
+                    </div>
+
+                    <div
+                        class="text-red-600 font-bold text-2xl tracking-tighter pr-8 flex-1 lg:flex-none"
+                    >
+                        verizon
+                    </div>
+
+                    <ul
+                        class="hidden lg:flex items-center gap-6 text-sm font-bold h-full"
+                    >
+                        <li>
+                            <button
+                                class="nav-trigger hover:text-red-600 h-16 flex items-center gap-1"
+                                data-target="prepaid"
+                            >
+                                Prepaid <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-4 w-4"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    ><path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M19 9l-7 7-7-7"></path></svg
+                                >
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                class="nav-trigger hover:text-red-600 h-16 flex items-center gap-1"
+                                data-target="postpay"
+                            >
+                                Postpay <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-4 w-4"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    ><path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M19 9l-7 7-7-7"></path></svg
+                                >
+                            </button>
+                        </li>
+                        <li>
+                            <a href="#" class="hover:text-red-600">Devices</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <SubNav />
+
+        <main class="flex-1">
+            <slot />
+        </main>
+    </div>
+
+    <MobileDrawer />
+</div>
+
+<script>
+    // Desktop Nav Interaction Logic
+    const triggers = document.querySelectorAll(".nav-trigger");
+    const subnavBar = document.getElementById("subnav-bar");
+    const submenus = document.querySelectorAll(".submenu-list");
+
+    if (subnavBar && triggers.length > 0) {
+        triggers.forEach((trigger) => {
+            trigger.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const targetId = trigger.getAttribute("data-target");
+                const targetMenu = document.getElementById(`menu-${targetId}`);
+
+                submenus.forEach((menu) => menu.classList.add("hidden"));
+
+                if (
+                    !subnavBar.classList.contains("hidden") &&
+                    !targetMenu.classList.contains("hidden")
+                ) {
+                    subnavBar.classList.add("hidden");
+                    return;
+                }
+
+                subnavBar.classList.remove("hidden");
+                targetMenu.classList.remove("hidden");
+            });
+        });
+
+        document.addEventListener("click", (e) => {
+            const header = document.querySelector("header");
+            if (
+                header &&
+                !header.contains(e.target as Node) &&
+                !subnavBar.contains(e.target as Node)
+            ) {
+                subnavBar.classList.add("hidden");
+                submenus.forEach((menu) => menu.classList.add("hidden"));
+            }
+        });
+    }
+</script>
