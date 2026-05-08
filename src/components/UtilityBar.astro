@@ -2,7 +2,9 @@
 // src/components/UtilityBar.astro
 ---
 
-<nav class="hidden lg:block w-full border-b border-base-300 bg-base-100">
+<nav
+    class="hidden lg:block w-full border-b border-base-300 bg-base-100 relative z-50"
+>
     <div
         class="max-w-[1440px] mx-auto px-4 lg:px-8 flex justify-between items-center h-10 text-[13px]"
     >
@@ -23,13 +25,15 @@
             class="flex items-center h-full divide-x divide-base-300 text-base-content/80"
         >
             <li class="px-3 flex items-center h-full">
-                <a href="#" class="hover:underline">1-833-VERIZON</a>
+                <a href="tel:03044948730" class="hover:underline"
+                    >0304-4948730</a
+                >
             </li>
             <li class="px-3 flex items-center h-full">
-                <a href="#" class="hover:underline">Contact us</a>
+                <a href="/contact" class="hover:underline">Contact us</a>
             </li>
             <li class="px-3 flex items-center h-full">
-                <a href="#" class="hover:underline">Support</a>
+                <a href="/customer-care" class="hover:underline">Support</a>
             </li>
             <li class="px-3 flex items-center h-full">
                 <a href="#" class="hover:underline">Stores</a>
@@ -83,12 +87,10 @@
 </nav>
 
 <script>
-    // Astro will bundle this cleanly
     const themeToggleBtn = document.getElementById("theme-toggle");
     const darkIcon = document.getElementById("theme-toggle-dark-icon");
     const lightIcon = document.getElementById("theme-toggle-light-icon");
 
-    // Toggle icons based on current theme
     function updateIcons() {
         if (
             document.documentElement.getAttribute("data-theme") ===
@@ -102,10 +104,8 @@
         }
     }
 
-    // Set correct icon initially
     updateIcons();
 
-    // Handle toggle click
     themeToggleBtn?.addEventListener("click", () => {
         const currentTheme =
             document.documentElement.getAttribute("data-theme");
@@ -114,7 +114,6 @@
                 ? "brandtheme"
                 : "brandtheme-dark";
 
-        // Update DOM and Local Storage
         document.documentElement.setAttribute("data-theme", newTheme);
         localStorage.setItem("theme", newTheme);
         updateIcons();

@@ -2,57 +2,51 @@
 // src/components/SubNav.astro
 
 const subMenus = {
-    prepaid: [
-        { label: "ALL OFFERS", href: "#" },
-        { label: "DATA", href: "#" },
-        { label: "ALL IN ONE OFFERS", href: "#" },
+    fiber: [
+        { label: "PACKAGES", href: "/subscriptions" },
+        { label: "COVERAGE", href: "#" },
+        { label: "INSTALLATION", href: "#" },
     ],
-    postpay: [
-        { label: "BILLING", href: "#" },
-        { label: "POSTPAY OFFERS", href: "#" },
+    wireless: [
+        { label: "PACKAGES", href: "/subscriptions" },
+        { label: "FEASIBILITY", href: "#" },
+    ],
+    equipment: [
+        { label: "ROUTERS & MESH", href: "#" },
+        { label: "WIRELESS DISHES", href: "#" },
+        { label: "ACCESSORIES", href: "#" },
+    ],
+    support: [
+        { label: "FAQ", href: "/faq" },
+        { label: "CONTACT US", href: "/contact" },
     ],
 };
 ---
 
 <div
     id="subnav-bar"
-    class="sticky top-0 z-50 hidden w-full bg-base-200 text-base-content border-b border-base-300 shadow-md"
+    class="hidden w-full bg-base-200 text-base-content border-b border-base-300 shadow-md relative z-30"
 >
     <div class="max-w-[1440px] mx-auto px-4 lg:px-8">
-        <ul
-            id="menu-prepaid"
-            class="submenu-list hidden flex items-center gap-8 h-12 text-sm font-semibold"
-        >
-            {
-                subMenus.prepaid.map((item) => (
-                    <li>
-                        <a
-                            href={item.href}
-                            class="hover:text-primary transition-colors"
-                        >
-                            {item.label}
-                        </a>
-                    </li>
-                ))
-            }
-        </ul>
-
-        <ul
-            id="menu-postpay"
-            class="submenu-list hidden flex items-center gap-8 h-12 text-sm font-semibold"
-        >
-            {
-                subMenus.postpay.map((item) => (
-                    <li>
-                        <a
-                            href={item.href}
-                            class="hover:text-primary transition-colors"
-                        >
-                            {item.label}
-                        </a>
-                    </li>
-                ))
-            }
-        </ul>
+        {/* Render each submenu dynamically */}
+        {
+            Object.entries(subMenus).map(([key, items]) => (
+                <ul
+                    id={`menu-${key}`}
+                    class="submenu-list hidden flex items-center justify-center gap-12 h-14 text-sm font-bold tracking-wide"
+                >
+                    {items.map((item) => (
+                        <li>
+                            <a
+                                href={item.href}
+                                class="hover:text-primary transition-colors"
+                            >
+                                {item.label}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            ))
+        }
     </div>
 </div>

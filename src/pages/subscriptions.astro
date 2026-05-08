@@ -161,7 +161,8 @@ const planGroups = [
                 {
                     categories.map((cat) => (
                         <button
-                            class={`btn btn-sm rounded-full whitespace-nowrap border-none transition-colors
+                            data-category={cat.id}
+                            class={`category-filter mobile-filter btn btn-sm rounded-full whitespace-nowrap border-none transition-colors
                         ${cat.active ? "btn-primary text-primary-content shadow-md" : "bg-base-200 text-base-content hover:bg-base-300"}`}
                         >
                             {cat.label}
@@ -188,7 +189,8 @@ const planGroups = [
                         <li>
                             <a
                                 href={`#${cat.id}`}
-                                class={`rounded-xl py-3 transition-colors ${
+                                data-category={cat.id}
+                                class={`category-filter desktop-filter rounded-xl py-3 transition-colors ${
                                     cat.active
                                         ? "active bg-primary text-primary-content shadow-sm font-medium"
                                         : "hover:bg-base-200 text-base-content/80"
@@ -225,12 +227,12 @@ const planGroups = [
                 {
                     planGroups.map((group) => (
                         <details
-                            class="collapse collapse-arrow bg-base-100 border border-base-200 rounded-2xl shadow-sm"
+                            class="plan-group collapse collapse-arrow bg-base-100 border border-base-200 rounded-2xl shadow-sm"
                             open={group.isOpen}
                         >
                             <summary class="collapse-title text-xl font-semibold bg-base-100/50 hover:bg-base-200/50 transition-colors">
                                 {group.title}
-                                <span class="text-base-content/50 text-sm font-normal ml-2">
+                                <span class="plan-count text-base-content/50 text-sm font-normal ml-2">
                                     ({group.plans.length}{" "}
                                     {group.plans.length === 1
                                         ? "plan"
@@ -241,63 +243,96 @@ const planGroups = [
 
                             <div class="collapse-content border-t border-base-200 bg-base-100">
                                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 pt-6">
-                                    {group.plans.map((plan) => (
-                                        <article class="card bg-base-200 rounded-2xl border border-base-300/40 transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1">
-                                            <div class="card-body p-6 flex flex-col h-full gap-4">
-                                                <div>
-                                                    <h3 class="text-lg font-semibold text-base-content/70 mb-1">
-                                                        {plan.name}
-                                                    </h3>
-                                                    <div class="flex items-end gap-1">
-                                                        <span class="text-3xl font-bold text-base-content tracking-tight">
-                                                            Rs. {plan.price}
-                                                        </span>
-                                                    </div>
-                                                </div>
+                                    {group.plans.map((plan) => {
+                                        // Infer category based on Validity text from mock data
+                                        const validityLower =
+                                            plan.validity.toLowerCase();
+                                        const planCategory =
+                                            validityLower.includes("1 month")
+                                                ? "monthly"
+                                                : validityLower.includes(
+                                                        "4 month",
+                                                    ) ||
+                                                    validityLower.includes(
+                                                        "3 month",
+                                                    )
+                                                  ? "quarterly"
+                                                  : validityLower.includes(
+                                                          "6 month",
+                                                      )
+                                                    ? "semi-annual"
+                                                    : validityLower.includes(
+                                                            "12 month",
+                                                        ) ||
+                                                        validityLower.includes(
+                                                            "1 year",
+                                                        )
+                                                      ? "annual"
+                                                      : "best-offers";
 
-                                                <div class="flex justify-between items-center py-4 border-y border-base-300/50 mt-2">
-                                                    <div class="flex flex-col">
-                                                        <span class="text-[11px] text-base-content/50 uppercase tracking-widest font-bold mb-1">
-                                                            Validity
-                                                        </span>
-                                                        <span class="text-sm font-semibold text-base-content">
-                                                            {plan.validity}
-                                                        </span>
+                                        return (
+                                            <article
+                                                class="plan-card card bg-base-200 rounded-2xl border border-base-300/40 transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1"
+                                                data-category={planCategory}
+                                            >
+                                                <div class="card-body p-6 flex flex-col h-full gap-4">
+                                                    <div>
+                                                        <h3 class="text-lg font-semibold text-base-content/70 mb-1">
+                                                            {plan.name}
+                                                        </h3>
+                                                        <div class="flex items-end gap-1">
+                                                            <span class="text-3xl font-bold text-base-content tracking-tight">
+                                                                Rs. {plan.price}
+                                                            </span>
+                                                        </div>
                                                     </div>
-                                                    <div class="w-px h-8 bg-base-300/80" />
-                                                    <div class="flex flex-col text-right">
-                                                        <span class="text-[11px] text-base-content/50 uppercase tracking-widest font-bold mb-1">
-                                                            Speed
-                                                        </span>
-                                                        <span class="text-sm font-semibold text-base-content">
-                                                            {plan.speed}
-                                                        </span>
-                                                    </div>
-                                                </div>
 
-                                                <div class="flex flex-col mt-2 min-h-[3rem]">
-                                                    <div class="text-xs font-semibold text-base-content/60 mb-2">
-                                                        Highlights:
+                                                    <div class="flex justify-between items-center py-4 border-y border-base-300/50 mt-2">
+                                                        <div class="flex flex-col">
+                                                            <span class="text-[11px] text-base-content/50 uppercase tracking-widest font-bold mb-1">
+                                                                Validity
+                                                            </span>
+                                                            <span class="text-sm font-semibold text-base-content">
+                                                                {plan.validity}
+                                                            </span>
+                                                        </div>
+                                                        <div class="w-px h-8 bg-base-300/80" />
+                                                        <div class="flex flex-col text-right">
+                                                            <span class="text-[11px] text-base-content/50 uppercase tracking-widest font-bold mb-1">
+                                                                Speed
+                                                            </span>
+                                                            <span class="text-sm font-semibold text-base-content">
+                                                                {plan.speed}
+                                                            </span>
+                                                        </div>
                                                     </div>
-                                                    <div class="flex flex-wrap gap-2">
-                                                        {plan.features.map(
-                                                            (feature) => (
-                                                                <span class="badge badge-sm badge-outline badge-primary font-medium">
-                                                                    {feature}
-                                                                </span>
-                                                            ),
-                                                        )}
-                                                    </div>
-                                                </div>
 
-                                                <div class="mt-auto pt-5 w-full">
-                                                    <button class="btn btn-primary btn-block rounded-full font-bold shadow-md shadow-primary/20 hover:shadow-primary/40">
-                                                        Book Now
-                                                    </button>
+                                                    <div class="flex flex-col mt-2 min-h-[3rem]">
+                                                        <div class="text-xs font-semibold text-base-content/60 mb-2">
+                                                            Highlights:
+                                                        </div>
+                                                        <div class="flex flex-wrap gap-2">
+                                                            {plan.features.map(
+                                                                (feature) => (
+                                                                    <span class="badge badge-sm badge-outline badge-primary font-medium">
+                                                                        {
+                                                                            feature
+                                                                        }
+                                                                    </span>
+                                                                ),
+                                                            )}
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="mt-auto pt-5 w-full">
+                                                        <button class="btn btn-primary btn-block rounded-full font-bold shadow-md shadow-primary/20 hover:shadow-primary/40">
+                                                            Book Now
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </article>
-                                    ))}
+                                            </article>
+                                        );
+                                    })}
                                 </div>
                             </div>
                         </details>
@@ -323,3 +358,113 @@ const planGroups = [
         display: none;
     }
 </style>
+
+<script>
+    // Filtering Logic mapped to Data Attributes generated in the markup
+    function initFilters() {
+        const filters = document.querySelectorAll(".category-filter");
+        const planGroups = document.querySelectorAll(".plan-group");
+
+        filters.forEach((filter) => {
+            filter.addEventListener("click", (e) => {
+                e.preventDefault();
+                const targetCategory = filter.getAttribute("data-category");
+
+                // 1. Update filter button styling (active states for Desktop and Mobile)
+                filters.forEach((btn) => {
+                    const isMobile = btn.classList.contains("mobile-filter");
+                    const isActive =
+                        btn.getAttribute("data-category") === targetCategory;
+
+                    if (isMobile) {
+                        if (isActive) {
+                            btn.classList.add(
+                                "btn-primary",
+                                "text-primary-content",
+                                "shadow-md",
+                            );
+                            btn.classList.remove(
+                                "bg-base-200",
+                                "text-base-content",
+                                "hover:bg-base-300",
+                            );
+                        } else {
+                            btn.classList.remove(
+                                "btn-primary",
+                                "text-primary-content",
+                                "shadow-md",
+                            );
+                            btn.classList.add(
+                                "bg-base-200",
+                                "text-base-content",
+                                "hover:bg-base-300",
+                            );
+                        }
+                    } else {
+                        if (isActive) {
+                            btn.classList.add(
+                                "active",
+                                "bg-primary",
+                                "text-primary-content",
+                                "shadow-sm",
+                                "font-medium",
+                            );
+                            btn.classList.remove(
+                                "hover:bg-base-200",
+                                "text-base-content/80",
+                            );
+                        } else {
+                            btn.classList.remove(
+                                "active",
+                                "bg-primary",
+                                "text-primary-content",
+                                "shadow-sm",
+                                "font-medium",
+                            );
+                            btn.classList.add(
+                                "hover:bg-base-200",
+                                "text-base-content/80",
+                            );
+                        }
+                    }
+                });
+
+                // 2. Filter the plans based on category
+                planGroups.forEach((group) => {
+                    let visibleCount = 0;
+                    const cards = group.querySelectorAll(".plan-card");
+
+                    cards.forEach((card) => {
+                        const cardCategory = card.getAttribute("data-category");
+
+                        // "best-offers" will act as a "View All" filter
+                        if (
+                            targetCategory === "best-offers" ||
+                            cardCategory === targetCategory
+                        ) {
+                            card.style.display = ""; // Reset to default flex
+                            visibleCount++;
+                        } else {
+                            card.style.display = "none";
+                        }
+                    });
+
+                    // 3. Update the item count badge and Collapse section visibility
+                    const countSpan = group.querySelector(".plan-count");
+                    if (countSpan) {
+                        countSpan.textContent = `(${visibleCount} ${visibleCount === 1 ? "plan" : "plans"})`;
+                    }
+
+                    // Hide the entire tier accordion if it has no visible items for that filter
+                    if (visibleCount === 0) {
+                        group.style.display = "none";
+                    } else {
+                        group.style.display = "";
+                    }
+                });
+            });
+        });
+    }
+
+    initFilters();
+</script>

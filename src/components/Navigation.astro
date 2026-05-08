@@ -18,9 +18,9 @@ import MobileDrawer from "./MobileDrawer.astro";
                 class="w-full text-base-content border-b border-base-300 h-16 flex items-center"
             >
                 <div
-                    class="max-w-[1440px] mx-auto w-full px-4 lg:px-8 flex items-center justify-between"
+                    class="max-w-[1440px] mx-auto w-full px-4 lg:px-8 flex items-center"
                 >
-                    <div class="flex-none lg:hidden">
+                    <div class="flex-none lg:hidden mr-4">
                         <label
                             for="mobile-menu-drawer"
                             class="btn btn-square btn-ghost"
@@ -39,23 +39,24 @@ import MobileDrawer from "./MobileDrawer.astro";
                         </label>
                     </div>
 
-                    <div
-                        class="text-primary font-bold text-2xl tracking-tighter pr-8 flex-1 lg:flex-none"
+                    <a
+                        href="/"
+                        class="text-primary font-bold text-2xl tracking-tighter pr-12 flex-1 lg:flex-none uppercase"
                     >
-                        verizon
-                    </div>
+                        Barq
+                    </a>
 
                     <ul
                         class="hidden lg:flex items-center gap-6 text-sm font-bold h-full"
                     >
                         <li>
                             <button
-                                class="nav-trigger hover:text-primary h-16 flex items-center gap-1"
-                                data-target="prepaid"
+                                class="nav-trigger hover:text-primary h-16 flex items-center gap-1 transition-colors"
+                                data-target="fiber"
                             >
-                                Prepaid <svg
+                                Fiber <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-4 w-4"
+                                    class="h-4 w-4 transition-transform duration-200 icon-arrow"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -69,12 +70,12 @@ import MobileDrawer from "./MobileDrawer.astro";
                         </li>
                         <li>
                             <button
-                                class="nav-trigger hover:text-primary h-16 flex items-center gap-1"
-                                data-target="postpay"
+                                class="nav-trigger hover:text-primary h-16 flex items-center gap-1 transition-colors"
+                                data-target="wireless"
                             >
-                                Postpay <svg
+                                Wireless <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    class="h-4 w-4"
+                                    class="h-4 w-4 transition-transform duration-200 icon-arrow"
                                     fill="none"
                                     viewBox="0 0 24 24"
                                     stroke="currentColor"
@@ -87,7 +88,42 @@ import MobileDrawer from "./MobileDrawer.astro";
                             </button>
                         </li>
                         <li>
-                            <a href="#" class="hover:text-primary">Devices</a>
+                            <button
+                                class="nav-trigger hover:text-primary h-16 flex items-center gap-1 transition-colors"
+                                data-target="equipment"
+                            >
+                                Equipment <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-4 w-4 transition-transform duration-200 icon-arrow"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    ><path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M19 9l-7 7-7-7"></path></svg
+                                >
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                class="nav-trigger hover:text-primary h-16 flex items-center gap-1 transition-colors"
+                                data-target="support"
+                            >
+                                Customer Care <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-4 w-4 transition-transform duration-200 icon-arrow"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    ><path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M19 9l-7 7-7-7"></path></svg
+                                >
+                            </button>
                         </li>
                     </ul>
                 </div>
@@ -105,33 +141,57 @@ import MobileDrawer from "./MobileDrawer.astro";
 </div>
 
 <script>
-    // Desktop Nav Interaction Logic
-    const triggers = document.querySelectorAll(".nav-trigger");
-    const subnavBar = document.getElementById("subnav-bar");
-    const submenus = document.querySelectorAll(".submenu-list");
+    function setupInteractiveNav() {
+        const triggers = document.querySelectorAll(".nav-trigger");
+        const subnavBar = document.getElementById("subnav-bar");
+        const submenus = document.querySelectorAll(".submenu-list");
+        let activeTarget = null;
 
-    if (subnavBar && triggers.length > 0) {
+        if (!subnavBar || triggers.length === 0) return;
+
+        // Function to reset all arrows to default pointing down
+        function resetArrows() {
+            triggers.forEach((t) => {
+                const icon = t.querySelector(".icon-arrow");
+                if (icon) icon.classList.remove("rotate-180");
+            });
+        }
+
+        // Function to close everything
+        function closeAll() {
+            subnavBar.classList.add("hidden");
+            submenus.forEach((menu) => menu.classList.add("hidden"));
+            resetArrows();
+            activeTarget = null;
+        }
+
         triggers.forEach((trigger) => {
             trigger.addEventListener("click", (e) => {
                 e.stopPropagation();
                 const targetId = trigger.getAttribute("data-target");
                 const targetMenu = document.getElementById(`menu-${targetId}`);
+                const arrowIcon = trigger.querySelector(".icon-arrow");
 
-                submenus.forEach((menu) => menu.classList.add("hidden"));
-
-                if (
-                    !subnavBar.classList.contains("hidden") &&
-                    !targetMenu.classList.contains("hidden")
-                ) {
-                    subnavBar.classList.add("hidden");
+                // If user clicks the exact same menu that is currently open, close it.
+                if (activeTarget === targetId) {
+                    closeAll();
                     return;
                 }
 
+                // Otherwise, prepare to open the new one by closing others first
+                submenus.forEach((menu) => menu.classList.add("hidden"));
+                resetArrows();
+
+                // Open the selected menu and rotate its arrow
                 subnavBar.classList.remove("hidden");
-                targetMenu.classList.remove("hidden");
+                if (targetMenu) targetMenu.classList.remove("hidden");
+                if (arrowIcon) arrowIcon.classList.add("rotate-180");
+
+                activeTarget = targetId;
             });
         });
 
+        // Close the subnav if the user clicks anywhere outside of the header/subnav
         document.addEventListener("click", (e) => {
             const header = document.querySelector("header");
             if (
@@ -139,9 +199,14 @@ import MobileDrawer from "./MobileDrawer.astro";
                 !header.contains(e.target as Node) &&
                 !subnavBar.contains(e.target as Node)
             ) {
-                subnavBar.classList.add("hidden");
-                submenus.forEach((menu) => menu.classList.add("hidden"));
+                closeAll();
             }
         });
     }
+
+    // Initialize the logic
+    setupInteractiveNav();
+
+    // If you are using Astro ViewTransitions, ensure the script re-runs on page navigation
+    document.addEventListener("astro:page-load", setupInteractiveNav);
 </script>

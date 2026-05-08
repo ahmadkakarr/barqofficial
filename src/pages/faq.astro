@@ -1,0 +1,146 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="FAQ - Barq">
+    <div class="min-h-screen bg-base-100 pb-20">
+        <div class="bg-base-200 py-16 lg:py-24 border-b border-base-300">
+            <div class="max-w-[1440px] mx-auto px-4 lg:px-8 text-center">
+                <h1
+                    class="text-4xl lg:text-5xl font-black text-base-content tracking-tight mb-6"
+                >
+                    Frequently Asked <span class="text-primary">Questions</span>
+                </h1>
+                <p class="text-lg text-base-content/70 max-w-2xl mx-auto">
+                    Find quick answers to common questions about our services,
+                    installation process, and support policies.
+                </p>
+            </div>
+        </div>
+
+        <div class="max-w-4xl mx-auto px-4 lg:px-8 mt-16">
+            <div class="space-y-4">
+                <div
+                    class="collapse collapse-plus bg-base-200 border border-base-300 rounded-2xl"
+                >
+                    <input
+                        type="radio"
+                        name="my-accordion-3"
+                        checked="checked"
+                    />
+                    <div
+                        class="collapse-title text-lg font-semibold text-base-content"
+                    >
+                        How long does a new installation take?
+                    </div>
+                    <div class="collapse-content text-base-content/70 pb-6">
+                        <p>
+                            Once your order is confirmed, our technical team
+                            typically completes Fiber installations within 24 to
+                            48 hours depending on your exact location in our
+                            coverage zones.
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    class="collapse collapse-plus bg-base-200 border border-base-300 rounded-2xl"
+                >
+                    <input type="radio" name="my-accordion-3" />
+                    <div
+                        class="collapse-title text-lg font-semibold text-base-content"
+                    >
+                        How do I check Wireless Feasibility?
+                    </div>
+                    <div class="collapse-content text-base-content/70 pb-6">
+                        <p>
+                            Please visit our <a
+                                href="/contact"
+                                class="link link-primary">Contact page</a
+                            > and select "Wireless Feasibility Check" in the subject
+                            dropdown. Provide your exact address and our team will
+                            check the Line-of-Sight to our nearest tower and call
+                            you back.
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    class="collapse collapse-plus bg-base-200 border border-base-300 rounded-2xl"
+                >
+                    <input type="radio" name="my-accordion-3" />
+                    <div
+                        class="collapse-title text-lg font-semibold text-base-content"
+                    >
+                        What are the installation charges?
+                    </div>
+                    <div class="collapse-content text-base-content/70 pb-6">
+                        <p>
+                            Standard fiber connections require a one-time setup
+                            fee of Rs. 4,000, which includes the routing
+                            equipment and initial wiring. Wireless dish setups
+                            vary based on distance and the specific Ubiquiti
+                            equipment required.
+                        </p>
+                    </div>
+                </div>
+
+                <div
+                    class="collapse collapse-plus bg-base-200 border border-base-300 rounded-2xl"
+                >
+                    <input type="radio" name="my-accordion-3" />
+                    <div
+                        class="collapse-title text-lg font-semibold text-base-content"
+                    >
+                        Do you offer static IPs?
+                    </div>
+                    <div class="collapse-content text-base-content/70 pb-6">
+                        <p>
+                            Yes, static IP addresses are available for an
+                            additional monthly fee. Some of our premium Pro
+                            Connect packages include a static IP by default.
+                            Please check the specific plan details on our
+                            packages page.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="mt-16 p-8 bg-primary/10 rounded-3xl border border-primary/20 text-center"
+            >
+                <div
+                    class="w-16 h-16 bg-primary/20 text-primary rounded-full flex items-center justify-center mx-auto mb-4"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-8 h-8"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                        ></path>
+                    </svg>
+                </div>
+                <h4 class="text-2xl font-bold text-base-content mb-3">
+                    Need immediate technical help?
+                </h4>
+                <p class="text-base-content/80 mb-8 max-w-lg mx-auto">
+                    If your internet is completely down, please reboot your
+                    router. If the PON light is red, call our direct line
+                    immediately.
+                </p>
+                <a
+                    href="/contact"
+                    class="btn btn-primary rounded-full px-10 shadow-md"
+                    >Contact Support</a
+                >
+            </div>
+        </div>
+    </div>
+</Layout>

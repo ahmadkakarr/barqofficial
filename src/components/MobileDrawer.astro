@@ -1,5 +1,22 @@
 ---
 // src/components/MobileDrawer.astro
+
+const menus = {
+    fiber: [
+        { label: "Packages", href: "/subscriptions" },
+        { label: "Coverage", href: "#" },
+        { label: "Installation", href: "#" },
+    ],
+    wireless: [
+        { label: "Packages", href: "/subscriptions" },
+        { label: "Feasibility", href: "#" },
+    ],
+    equipment: [
+        { label: "Routers & Mesh", href: "#" },
+        { label: "Wireless Dishes", href: "#" },
+        { label: "Accessories", href: "#" },
+    ],
+};
 ---
 
 <div class="drawer-side z-[100]">
@@ -13,7 +30,7 @@
         >
             <button
                 id="mobile-back-btn"
-                class="hidden text-base-content/70 hover:text-base-content"
+                class="hidden text-base-content/70 hover:text-primary"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -30,8 +47,7 @@
             </button>
             <span
                 id="mobile-menu-title"
-                class="font-bold text-lg hidden absolute left-12">Shop</span
-            >
+                class="font-bold text-lg hidden absolute left-12"></span>
 
             <label
                 for="mobile-menu-drawer"
@@ -58,19 +74,12 @@
                 class="menu p-0 w-full bg-base-100 text-lg transition-transform duration-300 absolute w-full left-0"
             >
                 <li>
-                    <a class="py-4 border-b border-base-300 font-normal"
-                        >Mobile</a>
-                </li>
-                <li>
-                    <a class="py-4 border-b border-base-300 font-normal"
-                        >Home Internet</a>
-                </li>
-                <li>
                     <button
-                        id="btn-open-shop"
-                        class="py-4 border-b border-base-300 font-bold flex justify-between rounded-none"
+                        class="mobile-drill-btn py-4 border-b border-base-300 font-bold flex justify-between rounded-none"
+                        data-target="pane-fiber"
+                        data-title="Fiber"
                     >
-                        Shop <svg
+                        Fiber <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -85,9 +94,12 @@
                     </button>
                 </li>
                 <li>
-                    <a
-                        class="py-4 border-b border-base-300 font-bold flex justify-between"
-                        >Deals <svg
+                    <button
+                        class="mobile-drill-btn py-4 border-b border-base-300 font-bold flex justify-between rounded-none"
+                        data-target="pane-wireless"
+                        data-title="Wireless"
+                    >
+                        Wireless <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
@@ -98,92 +110,105 @@
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 d="M8.25 4.5l7.5 7.5-7.5 7.5"></path></svg
-                        ></a
+                        >
+                    </button>
+                </li>
+                <li>
+                    <button
+                        class="mobile-drill-btn py-4 border-b border-base-300 font-bold flex justify-between rounded-none"
+                        data-target="pane-equipment"
+                        data-title="Equipment"
                     >
+                        Equipment <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-5 h-5"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M8.25 4.5l7.5 7.5-7.5 7.5"></path></svg
+                        >
+                    </button>
                 </li>
             </ul>
 
-            <ul
-                id="mobile-pane-shop"
-                class="menu p-0 w-full bg-base-100 text-lg transition-transform duration-300 absolute w-full left-full"
-            >
-                <li>
-                    <a
-                        class="py-4 border-b border-base-300 font-normal flex justify-between"
-                        >Devices <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-5 h-5"
-                            ><path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M8.25 4.5l7.5 7.5-7.5 7.5"></path></svg
-                        ></a
+            {
+                Object.entries(menus).map(([key, items]) => (
+                    <ul
+                        id={`pane-${key}`}
+                        class="mobile-sub-pane menu p-0 w-full bg-base-100 text-lg transition-transform duration-300 absolute left-full"
                     >
-                </li>
-                <li>
-                    <a
-                        class="py-4 border-b border-base-300 font-normal text-primary flex justify-between"
-                        >Mobile plans <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-5 h-5"
-                            ><path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M8.25 4.5l7.5 7.5-7.5 7.5"></path></svg
-                        ></a
-                    >
-                </li>
-                <li>
-                    <a
-                        class="py-4 border-b border-base-300 font-normal flex justify-between"
-                        >Home internet plans <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke-width="1.5"
-                            stroke="currentColor"
-                            class="w-5 h-5"
-                            ><path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M8.25 4.5l7.5 7.5-7.5 7.5"></path></svg
-                        ></a
-                    >
-                </li>
-            </ul>
+                        {items.map((item) => (
+                            <li>
+                                <a
+                                    href={item.href}
+                                    class="py-4 border-b border-base-300 font-normal flex justify-between"
+                                >
+                                    {item.label}{" "}
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="1.5"
+                                        stroke="currentColor"
+                                        class="w-5 h-5 text-base-content/40"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                                        />
+                                    </svg>
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                ))
+            }
         </div>
     </div>
 </div>
 
 <script>
     // Astro will bundle this script automatically
-    const btnOpenShop = document.getElementById("btn-open-shop");
+    const drillBtns = document.querySelectorAll(".mobile-drill-btn");
     const btnBack = document.getElementById("mobile-back-btn");
     const paneMain = document.getElementById("mobile-pane-main");
-    const paneShop = document.getElementById("mobile-pane-shop");
+    const subPanes = document.querySelectorAll(".mobile-sub-pane");
     const title = document.getElementById("mobile-menu-title");
 
-    if (btnOpenShop && btnBack) {
-        btnOpenShop.addEventListener("click", () => {
-            paneMain.style.transform = "translateX(-100%)";
-            paneShop.style.transform = "translateX(-100%)";
-            btnBack.classList.remove("hidden");
-            title.classList.remove("hidden");
+    let activePane = null;
+
+    if (drillBtns.length > 0 && btnBack && paneMain) {
+        drillBtns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const targetId = btn.getAttribute("data-target");
+                const menuTitle = btn.getAttribute("data-title");
+                activePane = document.getElementById(targetId);
+
+                if (activePane) {
+                    paneMain.style.transform = "translateX(-100%)";
+                    activePane.style.transform = "translateX(-100%)";
+
+                    if (title) title.textContent = menuTitle;
+
+                    btnBack.classList.remove("hidden");
+                    title.classList.remove("hidden");
+                }
+            });
         });
 
         btnBack.addEventListener("click", () => {
             paneMain.style.transform = "translateX(0)";
-            paneShop.style.transform = "translateX(0)";
+            if (activePane) {
+                activePane.style.transform = "translateX(0)";
+                activePane = null;
+            }
             btnBack.classList.add("hidden");
-            title.classList.add("hidden");
+            if (title) title.classList.add("hidden");
         });
     }
 </script>
