@@ -1,5 +1,5 @@
 ---
-import Layout from "../layouts/Layout.astro"; // Adjust path if necessary
+import Layout from "../layouts/Layout.astro";
 
 // --- Mock Data ---
 const categories = [
@@ -12,51 +12,135 @@ const categories = [
 
 const planGroups = [
     {
-        id: "tier-30",
-        title: "30 Mbps",
-        isOpen: true, // First one open by default
+        id: "tier-20",
+        title: "20 Mbps",
+        isOpen: false,
         plans: [
             {
-                name: "Starter",
-                price: "1,500",
+                name: "Essential",
+                price: "3,500",
+                validity: "1 Month",
+                speed: "Upto 20 Mbps",
+                features: ["Internet Only"],
+            },
+            {
+                name: "Media Plus",
+                price: "4,000",
+                validity: "1 Month",
+                speed: "Upto 20 Mbps",
+                features: ["Internet", "Live TV"],
+            },
+        ],
+    },
+    {
+        id: "tier-30",
+        title: "30 Mbps (Best Seller)",
+        isOpen: true, // Open by default
+        plans: [
+            {
+                name: "Essential Monthly",
+                price: "4,500",
                 validity: "1 Month",
                 speed: "Upto 30 Mbps",
-                ottCount: 2,
+                features: ["Internet Only"],
             },
             {
-                name: "Starter Plus",
-                price: "4,000",
-                validity: "3 Months",
+                name: "Media Plus Monthly",
+                price: "5,000",
+                validity: "1 Month",
                 speed: "Upto 30 Mbps",
-                ottCount: 4,
+                features: ["Internet", "TV App"],
             },
             {
-                name: "Starter Pro",
-                price: "15,000",
-                validity: "12 Months",
+                name: "Pro Connect Monthly",
+                price: "6,000",
+                validity: "1 Month",
                 speed: "Upto 30 Mbps",
-                ottCount: 6,
+                features: ["Internet", "TV", "Static IP"],
+            },
+            {
+                name: "Gamer Elite Monthly",
+                price: "5,500",
+                validity: "1 Month",
+                speed: "Upto 30 Mbps",
+                features: ["Low Latency", "Gaming Routing"],
+            },
+            {
+                name: "Essential Quarterly",
+                price: "18,000",
+                validity: "4 Months", // As requested, Quarterly = 4 months
+                speed: "Upto 30 Mbps",
+                features: ["Internet Only"],
+            },
+            {
+                name: "Pro Connect Quarterly",
+                price: "24,000",
+                validity: "4 Months",
+                speed: "Upto 30 Mbps",
+                features: ["Internet", "TV", "Static IP"],
+            },
+        ],
+    },
+    {
+        id: "tier-40",
+        title: "40 Mbps",
+        isOpen: false,
+        plans: [
+            {
+                name: "Essential",
+                price: "5,500",
+                validity: "1 Month",
+                speed: "Upto 40 Mbps",
+                features: ["Internet Only"],
+            },
+            {
+                name: "Pro Connect",
+                price: "7,000",
+                validity: "1 Month",
+                speed: "Upto 40 Mbps",
+                features: ["Internet", "TV", "Static IP"],
+            },
+        ],
+    },
+    {
+        id: "tier-50",
+        title: "50 Mbps",
+        isOpen: false,
+        plans: [
+            {
+                name: "Essential",
+                price: "6,500",
+                validity: "1 Month",
+                speed: "Upto 50 Mbps",
+                features: ["Internet Only"],
+            },
+            {
+                name: "Gamer Elite",
+                price: "7,500",
+                validity: "1 Month",
+                speed: "Upto 50 Mbps",
+                features: ["Low Latency", "Gaming Routing"],
             },
         ],
     },
     {
         id: "tier-100",
         title: "100 Mbps",
-        isOpen: false, // Closed by default
+        isOpen: false,
         plans: [
             {
-                name: "Streamer",
-                price: "3,500",
+                name: "Essential",
+                price: "15,000",
                 validity: "1 Month",
                 speed: "Upto 100 Mbps",
-                ottCount: 3,
+                features: ["Internet Only"],
             },
             {
-                name: "Streamer Pro",
-                price: "35,000",
-                validity: "12 Months",
+                name: "Enterprise Ultimate",
+                price: "17,500",
+                validity: "1 Month",
                 speed: "Upto 100 Mbps",
-                ottCount: 12,
+                features: ["4K Streaming", "Static IP", "Priority Support"],
             },
         ],
     },
@@ -104,7 +188,11 @@ const planGroups = [
                         <li>
                             <a
                                 href={`#${cat.id}`}
-                                class={`rounded-xl py-3 transition-colors ${cat.active ? "active bg-primary text-primary-content shadow-sm font-medium" : "hover:bg-base-200 text-base-content/80"}`}
+                                class={`rounded-xl py-3 transition-colors ${
+                                    cat.active
+                                        ? "active bg-primary text-primary-content shadow-sm font-medium"
+                                        : "hover:bg-base-200 text-base-content/80"
+                                }`}
                             >
                                 {cat.label}
                             </a>
@@ -116,18 +204,26 @@ const planGroups = [
 
         <main class="flex-1 p-4 lg:p-8 lg:pt-8 w-full">
             <header class="mb-8 hidden lg:block">
-                <h1 class="text-3xl font-bold text-base-content">
+                <h1
+                    class="text-3xl font-bold text-base-content flex items-center gap-3"
+                >
                     Subscription Packages
                 </h1>
-                <p class="text-base-content/60 mt-1">
-                    Choose the perfect high-speed plan for your needs.
-                </p>
+                <div class="flex items-center gap-3 mt-2">
+                    <p class="text-base-content/60">
+                        Choose the perfect high-speed plan for your needs.
+                    </p>
+                    <span
+                        class="badge badge-neutral text-xs font-semibold py-3 px-3 shadow-sm"
+                    >
+                        One time installation charges: Rs. 4,000
+                    </span>
+                </div>
             </header>
 
             <div class="space-y-6">
                 {
                     planGroups.map((group) => (
-                        // DaisyUI Native Accordion using <details> tag
                         <details
                             class="collapse collapse-arrow bg-base-100 border border-base-200 rounded-2xl shadow-sm"
                             open={group.isOpen}
@@ -146,7 +242,6 @@ const planGroups = [
                             <div class="collapse-content border-t border-base-200 bg-base-100">
                                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 pt-6">
                                     {group.plans.map((plan) => (
-                                        // Individual Plan Card
                                         <article class="card bg-base-200 rounded-2xl border border-base-300/40 transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1">
                                             <div class="card-body p-6 flex flex-col h-full gap-4">
                                                 <div>
@@ -156,9 +251,6 @@ const planGroups = [
                                                     <div class="flex items-end gap-1">
                                                         <span class="text-3xl font-bold text-base-content tracking-tight">
                                                             Rs. {plan.price}
-                                                        </span>
-                                                        <span class="text-sm text-base-content/60 font-medium mb-1">
-                                                            +GST
                                                         </span>
                                                     </div>
                                                 </div>
@@ -183,30 +275,17 @@ const planGroups = [
                                                     </div>
                                                 </div>
 
-                                                <div class="flex items-center justify-between mt-2 h-8">
-                                                    <div class="text-xs font-semibold text-base-content/60">
-                                                        Includes OTT:
+                                                <div class="flex flex-col mt-2 min-h-[3rem]">
+                                                    <div class="text-xs font-semibold text-base-content/60 mb-2">
+                                                        Highlights:
                                                     </div>
-                                                    <div class="flex items-center gap-2">
-                                                        <div class="avatar-group -space-x-3 rtl:space-x-reverse border-none">
-                                                            <div class="avatar border-2 border-base-200">
-                                                                <div class="w-7 bg-red-600 rounded-full flex items-center justify-center text-[10px] text-white font-bold">
-                                                                    N
-                                                                </div>
-                                                            </div>
-                                                            <div class="avatar border-2 border-base-200">
-                                                                <div class="w-7 bg-blue-500 rounded-full flex items-center justify-center text-[10px] text-white font-bold">
-                                                                    P
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        {plan.ottCount > 2 && (
-                                                            <span class="text-xs text-base-content/60 font-medium ml-1">
-                                                                +
-                                                                {plan.ottCount -
-                                                                    2}{" "}
-                                                                more
-                                                            </span>
+                                                    <div class="flex flex-wrap gap-2">
+                                                        {plan.features.map(
+                                                            (feature) => (
+                                                                <span class="badge badge-sm badge-outline badge-primary font-medium">
+                                                                    {feature}
+                                                                </span>
+                                                            ),
                                                         )}
                                                     </div>
                                                 </div>
@@ -230,7 +309,6 @@ const planGroups = [
 </Layout>
 
 <style>
-    /* Utility class to hide scrollbar on the mobile horizontal nav while keeping it scrollable */
     .hide-scrollbar::-webkit-scrollbar {
         display: none;
     }
@@ -238,8 +316,6 @@ const planGroups = [
         -ms-overflow-style: none;
         scrollbar-width: none;
     }
-
-    /* Ensure Details/Summary removes default browser arrow markers */
     details > summary {
         list-style: none;
     }

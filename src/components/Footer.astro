@@ -1,0 +1,111 @@
+---
+// src/components/Footer.astro
+const currentYear = new Date().getFullYear();
+---
+
+<footer
+    class="bg-base-100 text-base-content border-t border-base-300 py-12 mt-auto"
+>
+    <div class="max-w-[1440px] mx-auto px-4 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+            <div>
+                <h3 class="font-bold text-lg mb-4">Most Popular</h3>
+                <ul class="space-y-3 text-sm">
+                    <li>
+                        <a href="#" class="hover:text-primary transition-colors"
+                            >Apple iPhone 17</a
+                        >
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-primary transition-colors"
+                            >Samsung Galaxy S26 Ultra</a
+                        >
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-primary transition-colors"
+                            >Apple AirPods Max</a
+                        >
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-bold text-lg mb-4">Top Accessory Brands</h3>
+                <ul class="space-y-3 text-sm">
+                    <li>
+                        <a href="#" class="hover:text-primary transition-colors"
+                            >Otterbox</a
+                        >
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-primary transition-colors"
+                            >ZAGG</a
+                        >
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-primary transition-colors"
+                            >Beats</a
+                        >
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-bold text-lg mb-4">Important Information</h3>
+                <ul class="space-y-3 text-sm">
+                    <li>
+                        <a href="#" class="hover:text-primary transition-colors"
+                            >Legal Terms & Notices</a
+                        >
+                    </li>
+                    <li>
+                        <a href="#" class="hover:text-primary transition-colors"
+                            >Device Payment Terms</a
+                        >
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-bold text-lg mb-4">Follow Us</h3>
+                <div class="flex gap-4 mb-8">
+                    <button
+                        class="btn btn-ghost btn-circle btn-sm"
+                        aria-label="Facebook">FB</button
+                    >
+                    <button
+                        class="btn btn-ghost btn-circle btn-sm"
+                        aria-label="X (Twitter)">X</button
+                    >
+                    <button
+                        class="btn btn-ghost btn-circle btn-sm"
+                        aria-label="YouTube">YT</button
+                    >
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="border-t border-base-300 pt-8 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6"
+        >
+            <div
+                class="flex flex-col lg:flex-row items-start lg:items-center gap-8"
+            >
+                <span class="text-primary font-black text-3xl tracking-tighter"
+                    >barq</span
+                >
+                <nav
+                    class="flex flex-wrap gap-x-6 gap-y-2 text-xs font-medium opacity-75"
+                >
+                    <a href="#" class="hover:text-primary transition-colors"
+                        >Privacy Policy</a
+                    >
+                    <a href="#" class="hover:text-primary transition-colors"
+                        >Terms of Use</a
+                    >
+                    <a href="#" class="hover:text-primary transition-colors"
+                        >Accessibility</a
+                    >
+                </nav>
+            </div>
+            <p class="text-xs opacity-60">© {currentYear} Barq</p>
+        </div>
+    </div>
+</footer>
