@@ -1,19 +1,37 @@
+/* src/styles/global.css */
+
 /* 1. Import Tailwind v4 */
 @import "tailwindcss";
 
-/* 2. Import DaisyUI v5 as a CSS plugin */
+/* 2. Import DaisyUI v5 */
 @plugin "daisyui";
 
-/* 3. Define your custom theme using the new v4 CSS variables format */
-@layer theme {
-    [data-theme="brandtheme"] {
-        /* DaisyUI v5 aligns with Tailwind v4's new --color-* variable system */
-        --color-primary: #ff6b35;
-        --color-primary-content: #ffffff; /* Text color on top of primary buttons */
+/* 3. Define Light Theme (Default) */
+@plugin "daisyui/theme" {
+    name: "brandtheme";
+    default: true;
+    color-scheme: light;
 
-        --color-base-100: #ffffff;
-        --color-base-200: #f9fafb;
-        --color-base-300: #e5e7eb;
-        --color-base-content: #000000; /* Main text color */
-    }
+    --color-primary: #ff6b35;
+    --color-primary-content: #ffffff;
+    --color-base-100: #ffffff;
+    --color-base-200: #f9fafb;
+    --color-base-300: #e5e7eb;
+    --color-base-content: #000000;
+}
+
+/* 4. Define Dark Theme */
+@plugin "daisyui/theme" {
+    name: "brandtheme-dark";
+    prefersdark: true;
+    color-scheme: dark;
+
+    --color-primary: #ff6b35;
+    --color-primary-content: #ffffff;
+
+    /* Updated Dark Theme Colors */
+    --color-base-100: #121212; /* Main background color */
+    --color-base-200: #1a1a1a; /* Slightly lighter for cards/menus */
+    --color-base-300: #222222; /* Slightly lighter for borders/dividers */
+    --color-base-content: #ffffff; /* Main text color */
 }

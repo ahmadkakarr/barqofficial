@@ -4,7 +4,7 @@ import Navigation from "../components/Navigation.astro";
 ---
 
 <!doctype html>
-<html lang="en" data-theme="brandtheme">
+<html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
@@ -12,6 +12,27 @@ import Navigation from "../components/Navigation.astro";
         <link rel="icon" href="/favicon.ico" />
         <meta name="generator" content={Astro.generator} />
         <title>Astro Basics</title>
+
+        <script is:inline>
+            (function () {
+                const getTheme = () => {
+                    if (
+                        typeof localStorage !== "undefined" &&
+                        localStorage.getItem("theme")
+                    ) {
+                        return localStorage.getItem("theme");
+                    }
+                    if (
+                        window.matchMedia("(prefers-color-scheme: dark)")
+                            .matches
+                    ) {
+                        return "brandtheme-dark";
+                    }
+                    return "brandtheme";
+                };
+                document.documentElement.setAttribute("data-theme", getTheme());
+            })();
+        </script>
     </head>
     <body class="min-h-screen bg-base-100 text-base-content antialiased">
         <Navigation>
