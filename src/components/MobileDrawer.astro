@@ -6,14 +6,14 @@
     <label for="mobile-menu-drawer" class="drawer-overlay"></label>
 
     <div
-        class="w-full max-w-sm min-h-full bg-white text-black relative overflow-hidden"
+        class="w-full max-w-sm min-h-full bg-base-100 text-base-content relative overflow-hidden"
     >
         <div
-            class="flex justify-between items-center p-4 border-b h-16 absolute top-0 left-0 w-full z-10 bg-white"
+            class="flex justify-between items-center p-4 border-b border-base-300 h-16 absolute top-0 left-0 w-full z-10 bg-base-100"
         >
             <button
                 id="mobile-back-btn"
-                class="hidden text-gray-500 hover:text-black"
+                class="hidden text-base-content/70 hover:text-base-content"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -35,7 +35,7 @@
 
             <label
                 for="mobile-menu-drawer"
-                class="ml-auto cursor-pointer text-gray-500 hover:text-black"
+                class="ml-auto cursor-pointer text-base-content/70 hover:text-base-content"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -57,12 +57,18 @@
                 id="mobile-pane-main"
                 class="menu p-0 w-full bg-base-100 text-lg transition-transform duration-300 absolute w-full left-0"
             >
-                <li><a class="py-4 border-b font-normal">Mobile</a></li>
-                <li><a class="py-4 border-b font-normal">Home Internet</a></li>
+                <li>
+                    <a class="py-4 border-b border-base-300 font-normal"
+                        >Mobile</a>
+                </li>
+                <li>
+                    <a class="py-4 border-b border-base-300 font-normal"
+                        >Home Internet</a>
+                </li>
                 <li>
                     <button
                         id="btn-open-shop"
-                        class="py-4 border-b font-bold flex justify-between rounded-none"
+                        class="py-4 border-b border-base-300 font-bold flex justify-between rounded-none"
                     >
                         Shop <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +85,8 @@
                     </button>
                 </li>
                 <li>
-                    <a class="py-4 border-b font-bold flex justify-between"
+                    <a
+                        class="py-4 border-b border-base-300 font-bold flex justify-between"
                         >Deals <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -101,7 +108,8 @@
                 class="menu p-0 w-full bg-base-100 text-lg transition-transform duration-300 absolute w-full left-full"
             >
                 <li>
-                    <a class="py-4 border-b font-normal flex justify-between"
+                    <a
+                        class="py-4 border-b border-base-300 font-normal flex justify-between"
                         >Devices <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -113,11 +121,12 @@
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 d="M8.25 4.5l7.5 7.5-7.5 7.5"></path></svg
-                        ></a>
+                        ></a
+                    >
                 </li>
                 <li>
                     <a
-                        class="py-4 border-b font-normal text-red-600 flex justify-between"
+                        class="py-4 border-b border-base-300 font-normal text-primary flex justify-between"
                         >Mobile plans <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -129,10 +138,12 @@
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 d="M8.25 4.5l7.5 7.5-7.5 7.5"></path></svg
-                        ></a>
+                        ></a
+                    >
                 </li>
                 <li>
-                    <a class="py-4 border-b font-normal flex justify-between"
+                    <a
+                        class="py-4 border-b border-base-300 font-normal flex justify-between"
                         >Home internet plans <svg
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
@@ -144,7 +155,8 @@
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 d="M8.25 4.5l7.5 7.5-7.5 7.5"></path></svg
-                        ></a>
+                        ></a
+                    >
                 </li>
             </ul>
         </div>

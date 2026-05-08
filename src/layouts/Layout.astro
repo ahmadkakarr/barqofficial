@@ -1,11 +1,10 @@
 ---
 import "../styles/global.css";
-import UtilityBar from "../components/UtilityBar.astro";
 import Navigation from "../components/Navigation.astro";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="brandtheme">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
@@ -14,9 +13,7 @@ import Navigation from "../components/Navigation.astro";
         <meta name="generator" content={Astro.generator} />
         <title>Astro Basics</title>
     </head>
-    <body class="min-h-screen antialiased">
-        <!-- <UtilityBar /> -->
-
+    <body class="min-h-screen bg-base-100 text-base-content antialiased">
         <Navigation>
             <slot />
         </Navigation>
