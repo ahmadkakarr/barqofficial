@@ -2,14 +2,6 @@
 import Layout from "../layouts/Layout.astro";
 
 // --- Mock Data ---
-const categories = [
-    { id: "best-offers", label: "Best Offers", active: true },
-    { id: "monthly", label: "Monthly", active: false },
-    { id: "quarterly", label: "Quarterly", active: false },
-    { id: "semi-annual", label: "Semi-Annual", active: false },
-    { id: "annual", label: "Annual", active: false },
-];
-
 const planGroups = [
     {
         id: "tier-20",
@@ -35,7 +27,7 @@ const planGroups = [
     {
         id: "tier-30",
         title: "30 Mbps (Best Seller)",
-        isOpen: true, // Open by default
+        isOpen: true,
         plans: [
             {
                 name: "Essential Monthly",
@@ -68,7 +60,7 @@ const planGroups = [
             {
                 name: "Essential Quarterly",
                 price: "18,000",
-                validity: "4 Months", // As requested, Quarterly = 4 months
+                validity: "4 Months",
                 speed: "Upto 30 Mbps",
                 features: ["Internet Only"],
             },
@@ -149,88 +141,163 @@ const planGroups = [
 
 <Layout title="Subscription Packages">
     <div
-        class="max-w-[1440px] mx-auto min-h-screen bg-base-100 relative flex flex-col lg:flex-row pb-16"
+        class="max-w-[1440px] mx-auto min-h-screen bg-base-100 pb-24 pt-8 px-4 lg:px-8"
     >
-        <div
-            class="sticky top-0 z-40 bg-base-100/95 backdrop-blur-sm border-b border-base-300 p-4 lg:hidden"
+        <header
+            class="mb-8 text-center lg:text-left border-b border-base-200 pb-8"
         >
-            <nav
-                class="flex overflow-x-auto gap-3 pb-1 hide-scrollbar"
-                aria-label="Plan Categories Mobile"
+            <h1
+                class="text-3xl lg:text-4xl font-black text-base-content tracking-tight"
             >
-                {
-                    categories.map((cat) => (
-                        <button
-                            data-category={cat.id}
-                            class={`category-filter mobile-filter btn btn-sm rounded-full whitespace-nowrap border-none transition-colors
-                        ${cat.active ? "btn-primary text-primary-content shadow-md" : "bg-base-200 text-base-content hover:bg-base-300"}`}
-                        >
-                            {cat.label}
-                        </button>
-                    ))
-                }
-            </nav>
-        </div>
-
-        <aside
-            class="hidden lg:block w-[250px] shrink-0 sticky top-8 h-fit p-6 border-r border-base-200 mr-4"
-        >
-            <h2
-                class="text-xs font-bold text-base-content/50 uppercase tracking-wider mb-4 px-4"
+                Subscription Packages
+            </h1>
+            <div
+                class="flex flex-col lg:flex-row lg:items-center justify-between mt-4 gap-4"
             >
-                Categories
-            </h2>
-            <ul
-                class="menu bg-base-100 rounded-box p-0 gap-1"
-                aria-label="Plan Categories Desktop"
-            >
-                {
-                    categories.map((cat) => (
-                        <li>
-                            <a
-                                href={`#${cat.id}`}
-                                data-category={cat.id}
-                                class={`category-filter desktop-filter rounded-xl py-3 transition-colors ${
-                                    cat.active
-                                        ? "active bg-primary text-primary-content shadow-sm font-medium"
-                                        : "hover:bg-base-200 text-base-content/80"
-                                }`}
-                            >
-                                {cat.label}
-                            </a>
-                        </li>
-                    ))
-                }
-            </ul>
-        </aside>
-
-        <main class="flex-1 p-4 lg:p-8 lg:pt-8 w-full">
-            <header class="mb-8 hidden lg:block">
-                <h1
-                    class="text-3xl font-bold text-base-content flex items-center gap-3"
+                <p class="text-base-content/70 text-lg">
+                    Choose the perfect high-speed plan for your needs.
+                </p>
+                <span
+                    class="badge badge-neutral badge-lg py-4 px-4 shadow-sm shrink-0 font-bold text-xs uppercase tracking-wider"
                 >
-                    Subscription Packages
-                </h1>
-                <div class="flex items-center gap-3 mt-2">
-                    <p class="text-base-content/60">
-                        Choose the perfect high-speed plan for your needs.
-                    </p>
-                    <span
-                        class="badge badge-neutral text-xs font-semibold py-3 px-3 shadow-sm"
-                    >
-                        One time installation charges: Rs. 4,000
-                    </span>
-                </div>
-            </header>
+                    Installation: Rs. 4,000
+                </span>
+            </div>
+        </header>
 
-            <div class="space-y-6">
+        <div class="flex flex-col lg:flex-row gap-8 items-start">
+            <aside
+                class="w-full lg:w-[280px] xl:w-[320px] shrink-0 lg:sticky lg:top-24 z-20"
+            >
+                <div
+                    class="bg-base-200/50 rounded-2xl border border-base-300 shadow-sm overflow-hidden"
+                >
+                    <button
+                        id="mobile-filter-toggle"
+                        class="w-full flex lg:hidden items-center justify-between p-4 bg-base-200 hover:bg-base-300 transition-colors"
+                    >
+                        <span
+                            class="text-sm font-bold uppercase tracking-widest text-primary flex items-center gap-2"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="w-5 h-5"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                ><polygon
+                                    points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"
+                                ></polygon></svg
+                            >
+                            Filter Packages
+                        </span>
+                        <svg
+                            id="filter-chevron"
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="w-5 h-5 transition-transform text-base-content/50"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            ><polyline points="6 9 12 15 18 9"></polyline></svg
+                        >
+                    </button>
+
+                    <div
+                        id="filter-container"
+                        class="hidden lg:flex flex-col gap-8 p-5 lg:p-6 border-t border-base-300 lg:border-t-0"
+                    >
+                        <div class="flex flex-col gap-3">
+                            <span
+                                class="text-xs font-bold uppercase tracking-widest text-base-content/50"
+                                >Billing Cycle</span
+                            >
+                            <div class="flex flex-wrap lg:flex-col gap-2">
+                                <button
+                                    class="filter-btn btn btn-sm lg:btn-md rounded-full lg:rounded-xl lg:justify-start lg:px-4 btn-primary shadow-md"
+                                    data-type="validity"
+                                    data-val="all">All Cycles</button
+                                >
+                                <button
+                                    class="filter-btn btn btn-sm lg:btn-md rounded-full lg:rounded-xl lg:justify-start lg:px-4 btn-outline btn-primary"
+                                    data-type="validity"
+                                    data-val="monthly">Monthly</button
+                                >
+                                <button
+                                    class="filter-btn btn btn-sm lg:btn-md rounded-full lg:rounded-xl lg:justify-start lg:px-4 btn-outline btn-primary"
+                                    data-type="validity"
+                                    data-val="quarterly">Quarterly</button
+                                >
+                                <button
+                                    class="filter-btn btn btn-sm lg:btn-md rounded-full lg:rounded-xl lg:justify-start lg:px-4 btn-outline btn-primary"
+                                    data-type="validity"
+                                    data-val="semi-annual">Half Yearly</button
+                                >
+                                <button
+                                    class="filter-btn btn btn-sm lg:btn-md rounded-full lg:rounded-xl lg:justify-start lg:px-4 btn-outline btn-primary"
+                                    data-type="validity"
+                                    data-val="annual">Yearly</button
+                                >
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col gap-3">
+                            <span
+                                class="text-xs font-bold uppercase tracking-widest text-base-content/50"
+                                >Speed (Mbps)</span
+                            >
+                            <div
+                                class="flex flex-wrap lg:grid lg:grid-cols-2 gap-2"
+                            >
+                                <button
+                                    class="filter-btn btn btn-sm lg:btn-md rounded-full lg:rounded-xl btn-primary shadow-md"
+                                    data-type="speed"
+                                    data-val="all">All</button
+                                >
+                                <button
+                                    class="filter-btn btn btn-sm lg:btn-md rounded-full lg:rounded-xl btn-outline btn-primary"
+                                    data-type="speed"
+                                    data-val="20">20</button
+                                >
+                                <button
+                                    class="filter-btn btn btn-sm lg:btn-md rounded-full lg:rounded-xl btn-outline btn-primary"
+                                    data-type="speed"
+                                    data-val="30">30</button
+                                >
+                                <button
+                                    class="filter-btn btn btn-sm lg:btn-md rounded-full lg:rounded-xl btn-outline btn-primary"
+                                    data-type="speed"
+                                    data-val="40">40</button
+                                >
+                                <button
+                                    class="filter-btn btn btn-sm lg:btn-md rounded-full lg:rounded-xl btn-outline btn-primary"
+                                    data-type="speed"
+                                    data-val="50">50</button
+                                >
+                                <button
+                                    class="filter-btn btn btn-sm lg:btn-md rounded-full lg:rounded-xl btn-outline btn-primary"
+                                    data-type="speed"
+                                    data-val="100">100</button
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="flex-1 space-y-6 relative min-h-[400px] w-full">
                 {
                     planGroups.map((group) => (
                         <details
-                            class="plan-group collapse collapse-arrow bg-base-100 border border-base-200 rounded-2xl shadow-sm"
+                            class="plan-group collapse collapse-arrow bg-base-100 border border-base-200 rounded-3xl shadow-sm transition-all duration-300"
                             open={group.isOpen}
                         >
-                            <summary class="collapse-title text-xl font-semibold bg-base-100/50 hover:bg-base-200/50 transition-colors">
+                            <summary class="collapse-title text-xl font-bold bg-base-100 hover:bg-base-200/50 transition-colors py-5 px-6">
                                 {group.title}
                                 <span class="plan-count text-base-content/50 text-sm font-normal ml-2">
                                     ({group.plans.length}{" "}
@@ -241,80 +308,77 @@ const planGroups = [
                                 </span>
                             </summary>
 
-                            <div class="collapse-content border-t border-base-200 bg-base-100">
-                                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 pt-6">
+                            <div class="collapse-content border-t border-base-200 bg-base-100/50 px-6">
+                                <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 pt-6 pb-2">
                                     {group.plans.map((plan) => {
-                                        // Infer category based on Validity text from mock data
-                                        const validityLower =
-                                            plan.validity.toLowerCase();
-                                        const planCategory =
-                                            validityLower.includes("1 month")
-                                                ? "monthly"
-                                                : validityLower.includes(
-                                                        "4 month",
-                                                    ) ||
-                                                    validityLower.includes(
-                                                        "3 month",
-                                                    )
-                                                  ? "quarterly"
-                                                  : validityLower.includes(
-                                                          "6 month",
-                                                      )
-                                                    ? "semi-annual"
-                                                    : validityLower.includes(
-                                                            "12 month",
-                                                        ) ||
-                                                        validityLower.includes(
-                                                            "1 year",
-                                                        )
-                                                      ? "annual"
-                                                      : "best-offers";
+                                        const v = plan.validity.toLowerCase();
+                                        let planValidity = "all";
+                                        if (v.includes("1 month"))
+                                            planValidity = "monthly";
+                                        else if (
+                                            v.includes("3 month") ||
+                                            v.includes("4 month")
+                                        )
+                                            planValidity = "quarterly";
+                                        else if (v.includes("6 month"))
+                                            planValidity = "semi-annual";
+                                        else if (
+                                            v.includes("12 month") ||
+                                            v.includes("1 year")
+                                        )
+                                            planValidity = "annual";
+
+                                        const planSpeed = plan.speed.replace(
+                                            /\D/g,
+                                            "",
+                                        );
 
                                         return (
                                             <article
-                                                class="plan-card card bg-base-200 rounded-2xl border border-base-300/40 transition-all duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-1"
-                                                data-category={planCategory}
+                                                class="plan-card card bg-base-100 rounded-2xl border border-base-300/60 shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                                                data-validity={planValidity}
+                                                data-speed={planSpeed}
                                             >
                                                 <div class="card-body p-6 flex flex-col h-full gap-4">
                                                     <div>
-                                                        <h3 class="text-lg font-semibold text-base-content/70 mb-1">
+                                                        <h3 class="text-lg font-bold text-base-content/80 mb-1">
                                                             {plan.name}
                                                         </h3>
                                                         <div class="flex items-end gap-1">
-                                                            <span class="text-3xl font-bold text-base-content tracking-tight">
+                                                            <span class="text-3xl font-black text-primary tracking-tight">
                                                                 Rs. {plan.price}
                                                             </span>
                                                         </div>
                                                     </div>
 
-                                                    <div class="flex justify-between items-center py-4 border-y border-base-300/50 mt-2">
+                                                    <div class="flex justify-between items-center py-4 border-y border-base-300/50 mt-2 bg-base-200/30 rounded-xl px-4">
                                                         <div class="flex flex-col">
-                                                            <span class="text-[11px] text-base-content/50 uppercase tracking-widest font-bold mb-1">
+                                                            <span class="text-[10px] text-base-content/50 uppercase tracking-widest font-bold mb-1">
                                                                 Validity
                                                             </span>
-                                                            <span class="text-sm font-semibold text-base-content">
+                                                            <span class="text-sm font-bold text-base-content">
                                                                 {plan.validity}
                                                             </span>
                                                         </div>
                                                         <div class="w-px h-8 bg-base-300/80" />
                                                         <div class="flex flex-col text-right">
-                                                            <span class="text-[11px] text-base-content/50 uppercase tracking-widest font-bold mb-1">
+                                                            <span class="text-[10px] text-base-content/50 uppercase tracking-widest font-bold mb-1">
                                                                 Speed
                                                             </span>
-                                                            <span class="text-sm font-semibold text-base-content">
+                                                            <span class="text-sm font-bold text-base-content">
                                                                 {plan.speed}
                                                             </span>
                                                         </div>
                                                     </div>
 
                                                     <div class="flex flex-col mt-2 min-h-[3rem]">
-                                                        <div class="text-xs font-semibold text-base-content/60 mb-2">
-                                                            Highlights:
+                                                        <div class="text-xs font-bold text-base-content/50 mb-2 uppercase tracking-wider">
+                                                            Highlights
                                                         </div>
                                                         <div class="flex flex-wrap gap-2">
                                                             {plan.features.map(
                                                                 (feature) => (
-                                                                    <span class="badge badge-sm badge-outline badge-primary font-medium">
+                                                                    <span class="badge badge-sm badge-outline badge-neutral font-medium">
                                                                         {
                                                                             feature
                                                                         }
@@ -326,7 +390,7 @@ const planGroups = [
 
                                                     <div class="mt-auto pt-5 w-full">
                                                         <button
-                                                            class="btn btn-primary btn-block rounded-full font-bold shadow-md shadow-primary/20 hover:shadow-primary/40"
+                                                            class="btn btn-primary btn-block rounded-xl font-bold shadow-md shadow-primary/20 hover:shadow-primary/40"
                                                             onclick="document.getElementById('book_now_modal').showModal()"
                                                         >
                                                             Book Now
@@ -341,19 +405,38 @@ const planGroups = [
                         </details>
                     ))
                 }
-            </div>
-        </main>
+
+                <div
+                    id="empty-state"
+                    class="hidden absolute inset-0 flex flex-col items-center justify-center py-20 text-center"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        class="w-16 h-16 opacity-20 mb-4"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                        ></path>
+                    </svg>
+                    <h3 class="text-xl font-bold text-base-content/70">
+                        No matching plans found.
+                    </h3>
+                    <p class="text-sm text-base-content/50 mt-2">
+                        Try adjusting your filters to see more options.
+                    </p>
+                </div>
+            </main>
+        </div>
     </div>
 </Layout>
 
 <style>
-    .hide-scrollbar::-webkit-scrollbar {
-        display: none;
-    }
-    .hide-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
     details > summary {
         list-style: none;
     }
@@ -363,111 +446,114 @@ const planGroups = [
 </style>
 
 <script>
-    // Filtering Logic mapped to Data Attributes generated in the markup
-    function initFilters() {
-        const filters = document.querySelectorAll(".category-filter");
-        const planGroups = document.querySelectorAll(".plan-group");
+    function initDualFilters() {
+        let activeFilters = {
+            validity: "all",
+            speed: "all",
+        };
 
-        filters.forEach((filter) => {
-            filter.addEventListener("click", (e) => {
-                e.preventDefault();
-                const targetCategory = filter.getAttribute("data-category");
+        function applyFilters() {
+            const planGroups = document.querySelectorAll(".plan-group");
+            const emptyState = document.getElementById("empty-state");
+            let totalVisibleCards = 0;
 
-                // 1. Update filter button styling (active states for Desktop and Mobile)
-                filters.forEach((btn) => {
-                    const isMobile = btn.classList.contains("mobile-filter");
-                    const isActive =
-                        btn.getAttribute("data-category") === targetCategory;
+            // 1. Filter Grid
+            planGroups.forEach((group) => {
+                const g = group as HTMLElement;
+                const cards = g.querySelectorAll(".plan-card");
+                let groupVisibleCards = 0;
 
-                    if (isMobile) {
-                        if (isActive) {
-                            btn.classList.add(
-                                "btn-primary",
-                                "text-primary-content",
-                                "shadow-md",
-                            );
-                            btn.classList.remove(
-                                "bg-base-200",
-                                "text-base-content",
-                                "hover:bg-base-300",
-                            );
-                        } else {
-                            btn.classList.remove(
-                                "btn-primary",
-                                "text-primary-content",
-                                "shadow-md",
-                            );
-                            btn.classList.add(
-                                "bg-base-200",
-                                "text-base-content",
-                                "hover:bg-base-300",
-                            );
-                        }
+                cards.forEach((card) => {
+                    const c = card as HTMLElement;
+                    const cardValidity = c.getAttribute("data-validity");
+                    const cardSpeed = c.getAttribute("data-speed");
+
+                    const matchValidity =
+                        activeFilters.validity === "all" ||
+                        activeFilters.validity === cardValidity;
+                    const matchSpeed =
+                        activeFilters.speed === "all" ||
+                        activeFilters.speed === cardSpeed;
+
+                    if (matchValidity && matchSpeed) {
+                        c.style.display = "";
+                        groupVisibleCards++;
+                        totalVisibleCards++;
                     } else {
-                        if (isActive) {
-                            btn.classList.add(
-                                "active",
-                                "bg-primary",
-                                "text-primary-content",
-                                "shadow-sm",
-                                "font-medium",
-                            );
-                            btn.classList.remove(
-                                "hover:bg-base-200",
-                                "text-base-content/80",
-                            );
-                        } else {
-                            btn.classList.remove(
-                                "active",
-                                "bg-primary",
-                                "text-primary-content",
-                                "shadow-sm",
-                                "font-medium",
-                            );
-                            btn.classList.add(
-                                "hover:bg-base-200",
-                                "text-base-content/80",
-                            );
-                        }
+                        c.style.display = "none";
                     }
                 });
 
-                // 2. Filter the plans based on category
-                planGroups.forEach((group) => {
-                    let visibleCount = 0;
-                    const cards = group.querySelectorAll(".plan-card");
+                const countSpan = g.querySelector(".plan-count");
+                if (countSpan) {
+                    countSpan.textContent = `(${groupVisibleCards} ${groupVisibleCards === 1 ? "plan" : "plans"})`;
+                }
 
-                    cards.forEach((card) => {
-                        const cardCategory = card.getAttribute("data-category");
+                g.style.display = groupVisibleCards === 0 ? "none" : "block";
+            });
 
-                        // "best-offers" will act as a "View All" filter
-                        if (
-                            targetCategory === "best-offers" ||
-                            cardCategory === targetCategory
-                        ) {
-                            card.style.display = ""; // Reset to default flex
-                            visibleCount++;
-                        } else {
-                            card.style.display = "none";
-                        }
-                    });
+            if (emptyState) {
+                emptyState.style.display =
+                    totalVisibleCards === 0 ? "flex" : "none";
+            }
 
-                    // 3. Update the item count badge and Collapse section visibility
-                    const countSpan = group.querySelector(".plan-count");
-                    if (countSpan) {
-                        countSpan.textContent = `(${visibleCount} ${visibleCount === 1 ? "plan" : "plans"})`;
-                    }
+            // 2. Highlight correct pills/buttons
+            const liveFilterBtns = document.querySelectorAll(".filter-btn");
+            liveFilterBtns.forEach((btn) => {
+                const b = btn as HTMLButtonElement;
+                const type = b.getAttribute("data-type");
+                const val = b.getAttribute("data-val");
 
-                    // Hide the entire tier accordion if it has no visible items for that filter
-                    if (visibleCount === 0) {
-                        group.style.display = "none";
-                    } else {
-                        group.style.display = "";
-                    }
-                });
+                if (
+                    type &&
+                    activeFilters[type as keyof typeof activeFilters] === val
+                ) {
+                    b.classList.remove("btn-outline");
+                    b.classList.add("shadow-md");
+                } else {
+                    b.classList.add("btn-outline");
+                    b.classList.remove("shadow-md");
+                }
+            });
+        }
+
+        // 3. Click Listeners for Buttons
+        const filterBtns = document.querySelectorAll(".filter-btn");
+        filterBtns.forEach((btn) => {
+            if (btn.getAttribute("data-listener") === "true") return;
+            btn.setAttribute("data-listener", "true");
+
+            btn.addEventListener("click", () => {
+                const type = btn.getAttribute("data-type");
+                const val = btn.getAttribute("data-val");
+
+                if (type && val) {
+                    activeFilters[type as keyof typeof activeFilters] = val;
+                    applyFilters();
+                }
             });
         });
+
+        // 4. Mobile UX Accordion Toggle
+        const toggleBtn = document.getElementById("mobile-filter-toggle");
+        const container = document.getElementById("filter-container");
+        const chevron = document.getElementById("filter-chevron");
+
+        if (toggleBtn && container && chevron) {
+            if (toggleBtn.getAttribute("data-listener") !== "true") {
+                toggleBtn.setAttribute("data-listener", "true");
+                toggleBtn.addEventListener("click", () => {
+                    container.classList.toggle("hidden");
+                    container.classList.toggle("flex");
+                    chevron.classList.toggle("rotate-180");
+                });
+            }
+        }
+
+        // Run once on load
+        applyFilters();
     }
 
-    initFilters();
+    initDualFilters();
+    document.addEventListener("astro:page-load", initDualFilters);
 </script>
