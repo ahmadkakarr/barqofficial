@@ -1,0 +1,585 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+// Hardcoded service areas
+const coveredAreas = [
+    {
+        id: "bt-a",
+        name: "Sector A",
+        zone: "Bahria Town",
+        type: "fiber",
+        coords: [31.365, 74.188],
+    },
+    {
+        id: "bt-b",
+        name: "Sector B",
+        zone: "Bahria Town",
+        type: "fiber",
+        coords: [31.37, 74.182],
+    },
+    {
+        id: "bt-c",
+        name: "Sector C",
+        zone: "Bahria Town",
+        type: "fiber",
+        coords: [31.375, 74.178],
+    },
+    {
+        id: "bt-d",
+        name: "Sector D",
+        zone: "Bahria Town",
+        type: "fiber",
+        coords: [31.38, 74.175],
+    },
+    {
+        id: "bt-e",
+        name: "Sector E",
+        zone: "Bahria Town",
+        type: "fiber",
+        coords: [31.385, 74.17],
+    },
+    {
+        id: "bt-f",
+        name: "Sector F",
+        zone: "Bahria Town",
+        type: "fiber",
+        coords: [31.39, 74.165],
+    },
+    {
+        id: "bo-1",
+        name: "Phase 1",
+        zone: "Bahria Orchard",
+        type: "wireless",
+        coords: [31.305, 74.225],
+    },
+    {
+        id: "bo-2",
+        name: "Phase 2",
+        zone: "Bahria Orchard",
+        type: "wireless",
+        coords: [31.31, 74.22],
+    },
+    {
+        id: "bo-3",
+        name: "Phase 3",
+        zone: "Bahria Orchard",
+        type: "wireless",
+        coords: [31.315, 74.215],
+    },
+    {
+        id: "bo-4",
+        name: "Phase 4",
+        zone: "Bahria Orchard",
+        type: "wireless",
+        coords: [31.32, 74.21],
+    },
+];
+
+const bahriaTownAreas = coveredAreas.filter((a) => a.zone === "Bahria Town");
+const bahriaOrchardAreas = coveredAreas.filter(
+    (a) => a.zone === "Bahria Orchard",
+);
+
+// We serialize this to pass it safely to the client-side JavaScript
+const serializedAreas = JSON.stringify(coveredAreas);
+---
+
+<Layout title="Coverage Map - Barq Telecommunication">
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""
+    />
+    <script
+        is:inline
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
+    <div id="coverage-data" data-areas={serializedAreas} class="hidden"></div>
+
+    <div class="min-h-screen bg-base-100 pb-12 lg:pb-24">
+        <section
+            class="w-full pt-8 lg:pt-12 pb-4 lg:pb-6 px-4 lg:px-8 text-center max-w-3xl mx-auto"
+        >
+            <h1
+                class="text-3xl lg:text-5xl font-black text-base-content tracking-tight mb-2 lg:mb-4"
+            >
+                The <span class="text-primary">Barq Zone</span>
+            </h1>
+            <p class="text-base-content/70 text-base lg:text-lg">
+                Exclusive high-speed connectivity for Bahria Town & Bahria
+                Orchard. Select your sector below to verify coverage.
+            </p>
+        </section>
+
+        <section
+            class="px-4 lg:px-8 max-w-[1440px] mx-auto flex flex-col gap-4"
+        >
+            <div
+                class="block lg:hidden w-full relative z-40"
+                id="mobile-combobox"
+            >
+                <label class="label px-1 py-1"
+                    ><span
+                        class="label-text font-bold text-xs uppercase tracking-wider text-base-content/50"
+                        >Find your sector</span
+                    ></label
+                >
+                <div class="relative">
+                    <input
+                        type="text"
+                        id="mobile-sector-input"
+                        placeholder="Select or search sector..."
+                        class="input input-bordered w-full pr-10 pl-4 rounded-xl shadow-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 bg-base-100 font-medium cursor-pointer"
+                        autocomplete="off"
+                    />
+                    <div
+                        class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-5 w-5 text-base-content/50"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            ><path
+                                fill-rule="evenodd"
+                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path></svg
+                        >
+                    </div>
+                </div>
+
+                <ul
+                    id="mobile-sector-dropdown"
+                    class="menu bg-base-100 border border-base-300 w-full rounded-2xl absolute z-50 shadow-2xl max-h-[40vh] overflow-y-auto mt-2 hidden flex-nowrap p-2 gap-1"
+                >
+                </ul>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-6 lg:gap-8 w-full">
+                <div
+                    class="hidden lg:flex w-[400px] h-[700px] flex-col bg-base-200 border border-base-300 rounded-3xl overflow-hidden shadow-sm shrink-0"
+                >
+                    <div class="p-5 border-b border-base-300 bg-base-100">
+                        <div class="relative">
+                            <div
+                                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                            >
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 text-base-content/50"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    ><path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                    ></path></svg
+                                >
+                            </div>
+                            <input
+                                type="text"
+                                id="desktop-sector-filter"
+                                placeholder="Find your sector..."
+                                class="input input-bordered w-full pl-10 rounded-xl focus:outline-none focus:border-primary transition-colors bg-base-100"
+                            />
+                        </div>
+                    </div>
+
+                    <div
+                        class="flex-1 overflow-y-auto p-4 space-y-6 custom-scrollbar"
+                        id="desktop-directory-list"
+                    >
+                        <div class="area-group">
+                            <h3
+                                class="text-xs font-bold uppercase tracking-widest text-base-content/50 px-3 mb-3 flex items-center gap-2"
+                            >
+                                <div
+                                    class="w-2.5 h-2.5 rounded-full bg-[#4F46E5]"
+                                >
+                                </div>
+                                Bahria Town (Fiber)
+                            </h3>
+                            <div class="grid grid-cols-2 gap-2">
+                                {
+                                    bahriaTownAreas.map((area) => (
+                                        <button
+                                            class="sector-btn btn btn-sm h-auto py-2.5 px-3 btn-ghost bg-base-100 border border-base-300 hover:border-[#4F46E5] hover:text-[#4F46E5] justify-start text-left font-semibold shadow-sm transition-all rounded-xl"
+                                            data-id={area.id}
+                                        >
+                                            {area.name}
+                                        </button>
+                                    ))
+                                }
+                            </div>
+                        </div>
+
+                        <div class="area-group">
+                            <h3
+                                class="text-xs font-bold uppercase tracking-widest text-base-content/50 px-3 mb-3 flex items-center gap-2"
+                            >
+                                <div
+                                    class="w-2.5 h-2.5 rounded-full bg-[#0EA5E9]"
+                                >
+                                </div>
+                                Bahria Orchard (Wireless)
+                            </h3>
+                            <div class="grid grid-cols-2 gap-2">
+                                {
+                                    bahriaOrchardAreas.map((area) => (
+                                        <button
+                                            class="sector-btn btn btn-sm h-auto py-2.5 px-3 btn-ghost bg-base-100 border border-base-300 hover:border-[#0EA5E9] hover:text-[#0EA5E9] justify-start text-left font-semibold shadow-sm transition-all rounded-xl"
+                                            data-id={area.id}
+                                        >
+                                            {area.name}
+                                        </button>
+                                    ))
+                                }
+                            </div>
+                        </div>
+
+                        <div
+                            id="no-results-desktop"
+                            class="hidden text-center py-8 opacity-50 font-medium"
+                        >
+                            No sectors match your search.
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    class="w-full h-[450px] lg:h-[700px] lg:flex-1 relative rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.06)] border border-base-300 bg-base-200 z-0"
+                >
+                    <div
+                        id="coverage-map"
+                        class="absolute inset-0 w-full h-full z-0 pointer-events-none"
+                    >
+                    </div>
+
+                    <div
+                        id="map-unlock"
+                        class="absolute inset-0 flex flex-col items-center justify-center bg-base-200/20 backdrop-blur-[1px] transition-all duration-300 z-30 cursor-pointer"
+                    >
+                        <div
+                            class="bg-base-100 text-base-content px-5 py-2.5 rounded-full shadow-xl font-bold flex items-center gap-2 border border-base-300 pointer-events-none text-sm lg:text-base hover:bg-base-200 transition-colors"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                class="w-5 h-5 text-primary"
+                                ><path
+                                    fill-rule="evenodd"
+                                    d="M15 3.75a.75.75 0 01.75-.75h4.5a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0V5.56l-4.72 4.72a.75.75 0 11-1.06-1.06l4.72-4.72h-2.69a.75.75 0 01-.75-.75z"
+                                    clip-rule="evenodd"></path><path
+                                    fill-rule="evenodd"
+                                    d="M1.5 4.5a3 3 0 013-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 01-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 006.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 011.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 01-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5z"
+                                    clip-rule="evenodd"></path></svg
+                            >
+                            Tap to interact
+                        </div>
+                    </div>
+
+                    <div
+                        class="absolute bottom-4 left-4 z-20 pointer-events-none hidden lg:block"
+                    >
+                        <div
+                            class="bg-base-100 rounded-xl shadow-lg border border-base-200 p-3 pointer-events-auto flex flex-col gap-2"
+                        >
+                            <div
+                                class="flex items-center gap-2 text-xs font-bold"
+                            >
+                                <div class="w-3 h-3 rounded-full bg-[#4F46E5]">
+                                </div> Barq Fiber
+                            </div>
+                            <div
+                                class="flex items-center gap-2 text-xs font-bold"
+                            >
+                                <div class="w-3 h-3 rounded-full bg-[#0EA5E9]">
+                                </div> Wireless
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</Layout>
+
+<script>
+    let map = null;
+    let activeMarker = null;
+
+    function destroyMap() {
+        if (map) {
+            map.remove();
+            map = null;
+        }
+        const mapContainer = document.getElementById("coverage-map");
+        if (mapContainer) mapContainer.innerHTML = "";
+    }
+
+    function initCoverageUI() {
+        const mapContainer = document.getElementById("coverage-map");
+        const dataEl = document.getElementById("coverage-data");
+        if (!mapContainer || !dataEl || typeof window.L === "undefined") return;
+
+        // Parse the areas data injected by Astro
+        const areas = JSON.parse(dataEl.getAttribute("data-areas") || "[]");
+
+        destroyMap();
+
+        // 1. Initialize Map
+        map = window.L.map("coverage-map", {
+            zoomControl: false,
+            scrollWheelZoom: true,
+        }).setView([31.34, 74.2], 12);
+
+        window.L.control.zoom({ position: "topright" }).addTo(map);
+        window.L.tileLayer(
+            "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+            {
+                attribution: "&copy; OpenStreetMap",
+                maxZoom: 19,
+            },
+        ).addTo(map);
+
+        // 2. Draw Zones
+        window.L.circle([31.3715, 74.1833], {
+            color: "#4F46E5",
+            fillColor: "#4F46E5",
+            fillOpacity: 0.15,
+            radius: 3500,
+            interactive: false,
+        }).addTo(map);
+        window.L.circle([31.309, 74.2185], {
+            color: "#0EA5E9",
+            fillColor: "#0EA5E9",
+            fillOpacity: 0.15,
+            radius: 2500,
+            interactive: false,
+        }).addTo(map);
+
+        // 3. Map Unlock Logic
+        const mapUnlock = document.getElementById("map-unlock");
+        if (mapUnlock) {
+            mapUnlock.addEventListener("click", () => {
+                mapUnlock.style.opacity = "0";
+                mapUnlock.style.pointerEvents = "none";
+                mapContainer.style.pointerEvents = "auto";
+            });
+            document.addEventListener("click", (e) => {
+                const mapWrapper =
+                    document.getElementById("coverage-map")?.parentElement;
+                if (
+                    mapWrapper &&
+                    !mapWrapper.contains(e.target as Node) &&
+                    mapUnlock.style.opacity === "0"
+                ) {
+                    mapUnlock.style.opacity = "1";
+                    mapUnlock.style.pointerEvents = "auto";
+                    mapContainer.style.pointerEvents = "none";
+                }
+            });
+        }
+
+        // Shared function to trigger map flyTo and popup
+        function selectArea(id) {
+            const area = areas.find((a: any) => a.id === id);
+            if (!area) return;
+
+            const color = area.type === "fiber" ? "#4F46E5" : "#0EA5E9";
+            const serviceName =
+                area.type === "fiber" ? "Barq Fiber" : "Wireless Broadband";
+
+            if (mapUnlock) {
+                mapUnlock.style.opacity = "0";
+                mapUnlock.style.pointerEvents = "none";
+                mapContainer.style.pointerEvents = "auto";
+            }
+
+            map.flyTo(area.coords, 15, { duration: 1.5 });
+            if (activeMarker) map.removeLayer(activeMarker);
+
+            activeMarker = window.L.marker(area.coords).addTo(map);
+            activeMarker
+                .bindPopup(
+                    `
+                <div class="text-center p-2 font-sans min-w-[150px]">
+                    <div class="text-xs uppercase tracking-wider opacity-50 font-bold mb-1">${area.zone}</div>
+                    <div class="text-lg font-bold mb-2">${area.name}</div>
+                    <div class="badge badge-sm border-none text-white font-bold" style="background-color: ${color}">
+                        ${serviceName} Available
+                    </div>
+                </div>
+            `,
+                )
+                .openPopup();
+        }
+
+        // 4. DESKTOP FILTER LOGIC
+        const desktopFilter = document.getElementById(
+            "desktop-sector-filter",
+        ) as HTMLInputElement;
+        if (desktopFilter) {
+            const newFilter = desktopFilter.cloneNode(true) as HTMLInputElement;
+            desktopFilter.parentNode?.replaceChild(newFilter, desktopFilter);
+
+            newFilter.addEventListener("input", (e) => {
+                const term = (e.target as HTMLInputElement).value.toLowerCase();
+                let totalVisible = 0;
+                document.querySelectorAll(".area-group").forEach((group) => {
+                    let groupVisible = 0;
+                    group.querySelectorAll(".sector-btn").forEach((btn) => {
+                        const name = (
+                            btn as HTMLElement
+                        ).innerText.toLowerCase();
+                        if (name.includes(term)) {
+                            (btn as HTMLElement).style.display = "";
+                            groupVisible++;
+                            totalVisible++;
+                        } else {
+                            (btn as HTMLElement).style.display = "none";
+                        }
+                    });
+                    (group as HTMLElement).style.display =
+                        groupVisible === 0 ? "none" : "block";
+                });
+                const noRes = document.getElementById("no-results-desktop");
+                if (noRes)
+                    noRes.style.display = totalVisible === 0 ? "block" : "none";
+            });
+        }
+
+        document.querySelectorAll(".sector-btn").forEach((btn) => {
+            const newBtn = btn.cloneNode(true) as HTMLButtonElement;
+            btn.parentNode?.replaceChild(newBtn, btn);
+            newBtn.addEventListener("click", () =>
+                selectArea(newBtn.getAttribute("data-id")),
+            );
+        });
+
+        // 5. MOBILE STRICT COMBOBOX LOGIC
+        const mobileContainer = document.getElementById("mobile-combobox");
+        const mobileInput = document.getElementById(
+            "mobile-sector-input",
+        ) as HTMLInputElement;
+        const mobileDropdown = document.getElementById(
+            "mobile-sector-dropdown",
+        );
+
+        if (mobileContainer && mobileInput && mobileDropdown) {
+            let lastSelectedValue = "";
+
+            function renderMobileOptions(filterText = "") {
+                mobileDropdown.innerHTML = "";
+                const term = filterText.toLowerCase();
+
+                const filtered = areas.filter(
+                    (a: any) =>
+                        a.name.toLowerCase().includes(term) ||
+                        a.zone.toLowerCase().includes(term),
+                );
+
+                if (filtered.length === 0) {
+                    mobileDropdown.innerHTML = `<li class="px-4 py-3 text-sm opacity-50 font-medium">No matches found</li>`;
+                    return;
+                }
+
+                filtered.forEach((area: any) => {
+                    const li = document.createElement("li");
+                    const colorClass =
+                        area.type === "fiber"
+                            ? "text-[#4F46E5]"
+                            : "text-[#0EA5E9]";
+
+                    li.innerHTML = `
+                        <button class="flex flex-col items-start px-4 py-2 hover:bg-base-200 transition-colors w-full text-left rounded-xl">
+                            <span class="font-bold text-base text-base-content">${area.name}</span>
+                            <span class="text-xs font-semibold ${colorClass} uppercase tracking-wider">${area.zone}</span>
+                        </button>
+                    `;
+
+                    li.querySelector("button")?.addEventListener(
+                        "click",
+                        () => {
+                            const val = `${area.name} (${area.zone})`;
+                            mobileInput.value = val;
+                            lastSelectedValue = val; // Store valid selection
+                            mobileDropdown.classList.add("hidden");
+                            selectArea(area.id);
+                        },
+                    );
+
+                    mobileDropdown.appendChild(li);
+                });
+            }
+
+            const newMobileInput = mobileInput.cloneNode(
+                true,
+            ) as HTMLInputElement;
+            mobileInput.parentNode?.replaceChild(newMobileInput, mobileInput);
+
+            // Show all on click
+            newMobileInput.addEventListener("focus", () => {
+                newMobileInput.value = ""; // Clear to show full list instantly
+                renderMobileOptions("");
+                mobileDropdown.classList.remove("hidden");
+            });
+
+            // Filter on type
+            newMobileInput.addEventListener("input", (e) => {
+                renderMobileOptions((e.target as HTMLInputElement).value);
+                mobileDropdown.classList.remove("hidden");
+            });
+
+            // Strict fallback: if they click away without picking a valid option, revert
+            document.addEventListener("click", (e) => {
+                if (!mobileContainer.contains(e.target as Node)) {
+                    mobileDropdown.classList.add("hidden");
+                    // If they typed junk, revert to last known good selection
+                    if (newMobileInput.value !== lastSelectedValue) {
+                        newMobileInput.value = lastSelectedValue;
+                    }
+                }
+            });
+        }
+    }
+
+    initCoverageUI();
+    document.addEventListener("astro:page-load", initCoverageUI);
+    document.addEventListener("astro:before-swap", destroyMap);
+</script>
+
+<style is:global>
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: rgba(150, 150, 150, 0.2);
+        border-radius: 10px;
+    }
+
+    .leaflet-popup-content-wrapper {
+        border-radius: 16px;
+        box-shadow:
+            0 20px 25px -5px rgb(0 0 0 / 0.1),
+            0 8px 10px -6px rgb(0 0 0 / 0.1);
+        font-family: inherit;
+    }
+    .leaflet-popup-content {
+        margin: 12px;
+        line-height: 1.4;
+    }
+    .leaflet-container {
+        font-family: inherit;
+        z-index: 0 !important;
+    }
+</style>
