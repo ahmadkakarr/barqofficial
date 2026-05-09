@@ -10,7 +10,8 @@ import MobileDrawer from "./MobileDrawer.astro";
 
     <div class="drawer-content flex flex-col min-h-screen">
         <header
-            class="w-full flex flex-col relative z-40 bg-base-100 shadow-sm"
+            id="smart-header"
+            class="w-full flex flex-col sticky top-0 z-50 bg-base-100 shadow-sm transition-transform duration-300 ease-in-out translate-y-0"
         >
             <UtilityBar />
 
@@ -33,8 +34,9 @@ import MobileDrawer from "./MobileDrawer.astro";
                             />
                             <span
                                 class="text-primary font-bold text-xl lg:text-2xl tracking-tighter uppercase"
-                                >Barq</span
                             >
+                                Barq
+                            </span>
                         </a>
 
                         <ul
@@ -161,7 +163,6 @@ import MobileDrawer from "./MobileDrawer.astro";
 
         if (!subnavBar || triggers.length === 0) return;
 
-        // Function to reset all arrows to default pointing down
         function resetArrows() {
             triggers.forEach((t) => {
                 const icon = t.querySelector(".icon-arrow");
@@ -169,7 +170,6 @@ import MobileDrawer from "./MobileDrawer.astro";
             });
         }
 
-        // Function to close everything
         function closeAll() {
             subnavBar.classList.add("hidden");
             submenus.forEach((menu) => menu.classList.add("hidden"));
@@ -184,17 +184,14 @@ import MobileDrawer from "./MobileDrawer.astro";
                 const targetMenu = document.getElementById(`menu-${targetId}`);
                 const arrowIcon = trigger.querySelector(".icon-arrow");
 
-                // If user clicks the exact same menu that is currently open, close it.
                 if (activeTarget === targetId) {
                     closeAll();
                     return;
                 }
 
-                // Otherwise, prepare to open the new one by closing others first
                 submenus.forEach((menu) => menu.classList.add("hidden"));
                 resetArrows();
 
-                // Open the selected menu and rotate its arrow
                 subnavBar.classList.remove("hidden");
                 if (targetMenu) targetMenu.classList.remove("hidden");
                 if (arrowIcon) arrowIcon.classList.add("rotate-180");
@@ -203,7 +200,6 @@ import MobileDrawer from "./MobileDrawer.astro";
             });
         });
 
-        // Close the subnav if the user clicks anywhere outside of the header/subnav
         document.addEventListener("click", (e) => {
             const header = document.querySelector("header");
             if (
@@ -216,9 +212,49 @@ import MobileDrawer from "./MobileDrawer.astro";
         });
     }
 
-    // Initialize the logic resiliently
-    setupInteractiveNav();
+    // Smart Header Scroll Logic
+    function setupSmartHeader() {
+        const header = document.getElementById("smart-header");
+        if (!header) return;
 
-    // Re-run on Astro View Transitions swap
-    document.addEventListener("astro:page-load", setupInteractiveNav);
+        let lastScrollY = window.scrollY;
+
+        if (window._smartHeaderScrollFn) {
+            window.removeEventListener("scroll", window._smartHeaderScrollFn);
+        }
+
+        window._smartHeaderScrollFn = () => {
+            const currentScrollY = window.scrollY;
+
+            if (currentScrollY < 100) {
+                header.classList.remove("-translate-y-full");
+                header.classList.add("translate-y-0");
+            } else if (currentScrollY > lastScrollY) {
+                header.classList.remove("translate-y-0");
+                header.classList.add("-translate-y-full");
+
+                const subnavBar = document.getElementById("subnav-bar");
+                if (subnavBar && !subnavBar.classList.contains("hidden")) {
+                    subnavBar.classList.add("hidden");
+                }
+            } else {
+                header.classList.remove("-translate-y-full");
+                header.classList.add("translate-y-0");
+            }
+
+            lastScrollY = currentScrollY;
+        };
+
+        window.addEventListener("scroll", window._smartHeaderScrollFn, {
+            passive: true,
+        });
+    }
+
+    function init() {
+        setupInteractiveNav();
+        setupSmartHeader();
+    }
+
+    init();
+    document.addEventListener("astro:page-load", init);
 </script>
