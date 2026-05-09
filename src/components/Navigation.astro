@@ -5,7 +5,7 @@ import SubNav from "./SubNav.astro";
 import MobileDrawer from "./MobileDrawer.astro";
 ---
 
-<div class="drawer">
+<div class="drawer drawer-end">
     <input id="mobile-menu-drawer" type="checkbox" class="drawer-toggle" />
 
     <div class="drawer-content flex flex-col min-h-screen">
@@ -14,16 +14,116 @@ import MobileDrawer from "./MobileDrawer.astro";
         >
             <UtilityBar />
 
-            <nav
-                class="w-full text-base-content border-b border-base-300 h-16 flex items-center"
-            >
+            <nav class="w-full text-base-content border-b border-base-300 h-16">
                 <div
-                    class="max-w-[1440px] mx-auto w-full px-4 lg:px-8 flex items-center"
+                    class="max-w-[1440px] mx-auto w-full px-4 lg:px-8 flex items-center justify-between h-full"
                 >
-                    <div class="flex-none lg:hidden mr-4">
+                    <div class="flex items-center h-full lg:gap-12">
+                        <a
+                            href="/"
+                            class="flex items-center gap-3 transition-transform hover:scale-105 active:scale-95"
+                            aria-label="Barq Homepage"
+                        >
+                            <img
+                                src="/images/logos/logo-03.png"
+                                alt="Barq Logo"
+                                width="40"
+                                height="40"
+                                class="h-8 lg:h-10 w-auto object-contain"
+                            />
+                            <span
+                                class="text-primary font-bold text-xl lg:text-2xl tracking-tighter uppercase"
+                                >Barq</span
+                            >
+                        </a>
+
+                        <ul
+                            class="hidden lg:flex items-center gap-6 text-sm font-bold h-full"
+                        >
+                            <li>
+                                <button
+                                    class="nav-trigger hover:text-primary h-16 flex items-center gap-1 transition-colors"
+                                    data-target="fiber"
+                                >
+                                    Fiber <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-4 w-4 transition-transform duration-200 icon-arrow"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        ><path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 9l-7 7-7-7"></path></svg
+                                    >
+                                </button>
+                            </li>
+                            <li>
+                                <button
+                                    class="nav-trigger hover:text-primary h-16 flex items-center gap-1 transition-colors"
+                                    data-target="wireless"
+                                >
+                                    Wireless <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-4 w-4 transition-transform duration-200 icon-arrow"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        ><path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 9l-7 7-7-7"></path></svg
+                                    >
+                                </button>
+                            </li>
+                            <li>
+                                <button
+                                    class="nav-trigger hover:text-primary h-16 flex items-center gap-1 transition-colors"
+                                    data-target="equipment"
+                                >
+                                    Equipment <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-4 w-4 transition-transform duration-200 icon-arrow"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        ><path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 9l-7 7-7-7"></path></svg
+                                    >
+                                </button>
+                            </li>
+                            <li>
+                                <button
+                                    class="nav-trigger hover:text-primary h-16 flex items-center gap-1 transition-colors"
+                                    data-target="support"
+                                >
+                                    Customer Care <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-4 w-4 transition-transform duration-200 icon-arrow"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        ><path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M19 9l-7 7-7-7"></path></svg
+                                    >
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="flex-none lg:hidden">
                         <label
                             for="mobile-menu-drawer"
                             class="btn btn-square btn-ghost"
+                            aria-label="Open Menu"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -38,94 +138,6 @@ import MobileDrawer from "./MobileDrawer.astro";
                             >
                         </label>
                     </div>
-
-                    <a
-                        href="/"
-                        class="text-primary font-bold text-2xl tracking-tighter pr-12 flex-1 lg:flex-none uppercase"
-                    >
-                        Barq
-                    </a>
-
-                    <ul
-                        class="hidden lg:flex items-center gap-6 text-sm font-bold h-full"
-                    >
-                        <li>
-                            <button
-                                class="nav-trigger hover:text-primary h-16 flex items-center gap-1 transition-colors"
-                                data-target="fiber"
-                            >
-                                Fiber <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-4 w-4 transition-transform duration-200 icon-arrow"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    ><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M19 9l-7 7-7-7"></path></svg
-                                >
-                            </button>
-                        </li>
-                        <li>
-                            <button
-                                class="nav-trigger hover:text-primary h-16 flex items-center gap-1 transition-colors"
-                                data-target="wireless"
-                            >
-                                Wireless <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-4 w-4 transition-transform duration-200 icon-arrow"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    ><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M19 9l-7 7-7-7"></path></svg
-                                >
-                            </button>
-                        </li>
-                        <li>
-                            <button
-                                class="nav-trigger hover:text-primary h-16 flex items-center gap-1 transition-colors"
-                                data-target="equipment"
-                            >
-                                Equipment <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-4 w-4 transition-transform duration-200 icon-arrow"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    ><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M19 9l-7 7-7-7"></path></svg
-                                >
-                            </button>
-                        </li>
-                        <li>
-                            <button
-                                class="nav-trigger hover:text-primary h-16 flex items-center gap-1 transition-colors"
-                                data-target="support"
-                            >
-                                Customer Care <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    class="h-4 w-4 transition-transform duration-200 icon-arrow"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                    ><path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M19 9l-7 7-7-7"></path></svg
-                                >
-                            </button>
-                        </li>
-                    </ul>
                 </div>
             </nav>
         </header>
@@ -204,9 +216,9 @@ import MobileDrawer from "./MobileDrawer.astro";
         });
     }
 
-    // Initialize the logic
+    // Initialize the logic resiliently
     setupInteractiveNav();
 
-    // If you are using Astro ViewTransitions, ensure the script re-runs on page navigation
+    // Re-run on Astro View Transitions swap
     document.addEventListener("astro:page-load", setupInteractiveNav);
 </script>

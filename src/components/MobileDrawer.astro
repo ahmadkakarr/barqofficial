@@ -16,66 +16,78 @@ const menus = {
         { label: "Wireless Dishes", href: "#" },
         { label: "Accessories", href: "#" },
     ],
+    support: [
+        { label: "Help & FAQs", href: "/faq" },
+        { label: "Contact Us", href: "/contact" },
+        { label: "Customer Care", href: "/customer-care" },
+    ],
 };
 ---
 
 <div class="drawer-side z-[100]">
-    <label for="mobile-menu-drawer" class="drawer-overlay"></label>
+    <label
+        for="mobile-menu-drawer"
+        class="drawer-overlay"
+        aria-label="Close menu"></label>
 
     <div
-        class="w-full max-w-sm min-h-full bg-base-100 text-base-content relative overflow-hidden"
+        class="w-full max-w-sm min-h-full bg-base-100 text-base-content flex flex-col relative pb-24 shadow-2xl"
     >
         <div
-            class="flex justify-between items-center p-4 border-b border-base-300 h-16 absolute top-0 left-0 w-full z-10 bg-base-100"
+            class="px-4 py-4 border-b border-base-200 shrink-0 bg-base-100 z-20"
         >
-            <button
-                id="mobile-back-btn"
-                class="hidden text-base-content/70 hover:text-primary"
+            <div
+                class="bg-base-200/70 p-1 rounded-full flex text-sm font-bold relative"
             >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-6 h-6"
-                    ><path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M15.75 19.5L8.25 12l7.5-7.5"></path></svg
+                <button
+                    class="flex-1 py-2 text-center rounded-full bg-base-100 shadow-sm text-primary transition-all"
+                    >Personal</button
                 >
-            </button>
-            <span
-                id="mobile-menu-title"
-                class="font-bold text-lg hidden absolute left-12"></span>
-
-            <label
-                for="mobile-menu-drawer"
-                class="ml-auto cursor-pointer text-base-content/70 hover:text-base-content"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="w-7 h-7"
-                    ><path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M6 18L18 6M6 6l12 12"></path></svg
+                <button
+                    class="flex-1 py-2 text-center rounded-full text-base-content/60 hover:text-base-content transition-all"
+                    >Business</button
                 >
-            </label>
+            </div>
         </div>
 
-        <div class="pt-16 h-full w-full relative">
+        <div
+            class="flex justify-center items-center p-4 border-b border-base-200 h-16 shrink-0 relative bg-base-100 z-20"
+        >
+            <div
+                class="relative flex items-center justify-center w-full h-full"
+            >
+                <a
+                    href="/"
+                    id="mobile-drawer-logo"
+                    class="flex items-center gap-2 transition-all duration-300 active:scale-95"
+                >
+                    <img
+                        src="/images/logos/logo-03.png"
+                        alt="Barq Logo"
+                        width="32"
+                        height="32"
+                        class="h-8 w-auto object-contain"
+                    />
+                    <span
+                        class="text-primary font-bold text-xl tracking-tighter uppercase"
+                        >Barq</span
+                    >
+                </a>
+                <span
+                    id="mobile-menu-title"
+                    class="font-bold text-lg tracking-tight uppercase absolute opacity-0 scale-95 transition-all duration-300 text-primary"
+                ></span>
+            </div>
+        </div>
+
+        <div class="flex-1 relative w-full h-full overflow-hidden">
             <ul
                 id="mobile-pane-main"
-                class="menu p-0 w-full bg-base-100 text-lg transition-transform duration-300 absolute w-full left-0"
+                class="absolute inset-0 menu p-0 w-full bg-base-100 transition-transform duration-300 ease-in-out translate-x-0 overflow-y-auto"
             >
                 <li>
                     <button
-                        class="mobile-drill-btn py-4 border-b border-base-300 font-bold flex justify-between rounded-none"
+                        class="mobile-drill-btn py-4 px-6 border-b border-base-200 font-bold text-base flex justify-between rounded-none hover:bg-base-200/50"
                         data-target="pane-fiber"
                         data-title="Fiber"
                     >
@@ -83,9 +95,9 @@ const menus = {
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
-                            stroke-width="1.5"
+                            stroke-width="2"
                             stroke="currentColor"
-                            class="w-5 h-5"
+                            class="w-4 h-4 text-base-content/40"
                             ><path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
@@ -95,7 +107,7 @@ const menus = {
                 </li>
                 <li>
                     <button
-                        class="mobile-drill-btn py-4 border-b border-base-300 font-bold flex justify-between rounded-none"
+                        class="mobile-drill-btn py-4 px-6 border-b border-base-200 font-bold text-base flex justify-between rounded-none hover:bg-base-200/50"
                         data-target="pane-wireless"
                         data-title="Wireless"
                     >
@@ -103,9 +115,9 @@ const menus = {
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
-                            stroke-width="1.5"
+                            stroke-width="2"
                             stroke="currentColor"
-                            class="w-5 h-5"
+                            class="w-4 h-4 text-base-content/40"
                             ><path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
@@ -115,7 +127,7 @@ const menus = {
                 </li>
                 <li>
                     <button
-                        class="mobile-drill-btn py-4 border-b border-base-300 font-bold flex justify-between rounded-none"
+                        class="mobile-drill-btn py-4 px-6 border-b border-base-200 font-bold text-base flex justify-between rounded-none hover:bg-base-200/50"
                         data-target="pane-equipment"
                         data-title="Equipment"
                     >
@@ -123,9 +135,9 @@ const menus = {
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"
-                            stroke-width="1.5"
+                            stroke-width="2"
                             stroke="currentColor"
-                            class="w-5 h-5"
+                            class="w-4 h-4 text-base-content/40"
                             ><path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
@@ -133,35 +145,76 @@ const menus = {
                         >
                     </button>
                 </li>
+                <li>
+                    <button
+                        class="mobile-drill-btn py-4 px-6 border-b border-base-200 font-bold text-base flex justify-between rounded-none hover:bg-base-200/50"
+                        data-target="pane-support"
+                        data-title="Support"
+                    >
+                        Support <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="2"
+                            stroke="currentColor"
+                            class="w-4 h-4 text-base-content/40"
+                            ><path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M8.25 4.5l7.5 7.5-7.5 7.5"></path></svg
+                        >
+                    </button>
+                </li>
+
+                <li class="mt-4 px-4">
+                    <span
+                        class="text-xs font-bold uppercase opacity-50 px-2 py-1 tracking-wider"
+                        >Quick Links</span
+                    >
+                </li>
+                <li>
+                    <a
+                        href="tel:03364011111"
+                        class="py-3 px-6 font-medium text-base-content/80 rounded-none"
+                        ><span class="text-primary mr-2">📞</span> 0336-4011111</a
+                    >
+                </li>
+                <li>
+                    <a
+                        href="#"
+                        class="py-3 px-6 font-medium text-base-content/80 rounded-none"
+                        >Stores</a
+                    >
+                </li>
+                <li>
+                    <a
+                        href="#"
+                        class="py-3 px-6 font-medium text-base-content/80 rounded-none"
+                        >Coverage Map</a
+                    >
+                </li>
+                <li>
+                    <a
+                        href="#"
+                        class="py-3 px-6 font-medium text-base-content/80 rounded-none"
+                        >Español</a
+                    >
+                </li>
             </ul>
 
             {
                 Object.entries(menus).map(([key, items]) => (
                     <ul
                         id={`pane-${key}`}
-                        class="mobile-sub-pane menu p-0 w-full bg-base-100 text-lg transition-transform duration-300 absolute left-full"
+                        class="mobile-sub-pane absolute inset-0 menu p-0 w-full bg-base-100 transition-transform duration-300 ease-in-out translate-x-full overflow-y-auto"
                     >
                         {items.map((item) => (
                             <li>
                                 <a
                                     href={item.href}
-                                    class="py-4 border-b border-base-300 font-normal flex justify-between"
+                                    class="mobile-link py-4 px-6 border-b border-base-200 font-medium text-base flex justify-between rounded-none active:bg-primary/10"
                                 >
-                                    {item.label}{" "}
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor"
-                                        class="w-5 h-5 text-base-content/40"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                                        />
-                                    </svg>
+                                    {item.label}
                                 </a>
                             </li>
                         ))}
@@ -169,46 +222,147 @@ const menus = {
                 ))
             }
         </div>
+
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-50">
+            <div
+                class="bg-base-300 shadow-xl rounded-full p-1.5 flex items-center border border-base-content/10 transition-all duration-300"
+            >
+                <button
+                    id="mobile-back-btn"
+                    class="hidden btn btn-sm btn-ghost rounded-full px-5 font-bold text-base-content hover:bg-base-200 gap-1.5 transition-all duration-300"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="2.5"
+                        stroke="currentColor"
+                        class="w-4 h-4"
+                        ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15.75 19.5L8.25 12l7.5-7.5"></path></svg
+                    >
+                    Back
+                </button>
+
+                <label
+                    for="mobile-menu-drawer"
+                    class="btn btn-sm btn-ghost rounded-full px-5 font-bold text-base-content hover:bg-base-200 gap-1.5 cursor-pointer transition-all duration-300"
+                >
+                    Close
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="2.5"
+                        stroke="currentColor"
+                        class="w-4 h-4"
+                        ><path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M6 18L18 6M6 6l12 12"></path></svg
+                    >
+                </label>
+            </div>
+        </div>
     </div>
 </div>
 
 <script>
-    // Astro will bundle this script automatically
-    const drillBtns = document.querySelectorAll(".mobile-drill-btn");
-    const btnBack = document.getElementById("mobile-back-btn");
-    const paneMain = document.getElementById("mobile-pane-main");
-    const subPanes = document.querySelectorAll(".mobile-sub-pane");
-    const title = document.getElementById("mobile-menu-title");
+    function initMobileDrawer() {
+        const drillBtns = document.querySelectorAll(".mobile-drill-btn");
+        const btnBack = document.getElementById("mobile-back-btn");
+        const paneMain = document.getElementById("mobile-pane-main");
+        const title = document.getElementById("mobile-menu-title");
+        const logo = document.getElementById("mobile-drawer-logo");
+        const drawerCheckbox = document.getElementById(
+            "mobile-menu-drawer",
+        ) as HTMLInputElement;
+        const mobileLinks = document.querySelectorAll(
+            ".mobile-link, #mobile-pane-main a[href]",
+        );
 
-    let activePane = null;
+        let activePane: HTMLElement | null = null;
 
-    if (drillBtns.length > 0 && btnBack && paneMain) {
+        function closeSubPane() {
+            // Restore main pane
+            if (paneMain) {
+                paneMain.classList.remove("-translate-x-full");
+                paneMain.classList.add("translate-x-0");
+            }
+            // Hide active pane
+            if (activePane) {
+                activePane.classList.remove("translate-x-0");
+                activePane.classList.add("translate-x-full");
+                activePane = null;
+            }
+
+            // Hide Back button in the floating pill
+            if (btnBack) btnBack.classList.add("hidden");
+
+            // Swap Title back to Logo safely
+            if (title && logo) {
+                title.classList.add("opacity-0", "scale-95");
+                setTimeout(() => {
+                    logo.classList.remove("opacity-0", "scale-95");
+                }, 150);
+            }
+        }
+
+        // Drill down into submenu
         drillBtns.forEach((btn) => {
-            btn.addEventListener("click", () => {
-                const targetId = btn.getAttribute("data-target");
-                const menuTitle = btn.getAttribute("data-title");
-                activePane = document.getElementById(targetId);
+            const newBtn = btn.cloneNode(true) as HTMLButtonElement;
+            btn.parentNode?.replaceChild(newBtn, btn);
 
-                if (activePane) {
-                    paneMain.style.transform = "translateX(-100%)";
-                    activePane.style.transform = "translateX(-100%)";
+            newBtn.addEventListener("click", () => {
+                const targetId = newBtn.getAttribute("data-target");
+                const menuTitle = newBtn.getAttribute("data-title");
+                activePane = document.getElementById(targetId as string);
 
-                    if (title) title.textContent = menuTitle;
+                if (activePane && paneMain) {
+                    // Hide main pane
+                    paneMain.classList.remove("translate-x-0");
+                    paneMain.classList.add("-translate-x-full");
 
-                    btnBack.classList.remove("hidden");
-                    title.classList.remove("hidden");
+                    // Show target pane
+                    activePane.classList.remove("translate-x-full");
+                    activePane.classList.add("translate-x-0");
+
+                    // Show Back button in the floating pill
+                    if (btnBack) btnBack.classList.remove("hidden");
+
+                    // Swap Logo to Title smoothly
+                    if (title && logo) {
+                        logo.classList.add("opacity-0", "scale-95");
+                        setTimeout(() => {
+                            title.textContent = menuTitle;
+                            title.classList.remove("opacity-0", "scale-95");
+                        }, 150);
+                    }
                 }
             });
         });
 
-        btnBack.addEventListener("click", () => {
-            paneMain.style.transform = "translateX(0)";
-            if (activePane) {
-                activePane.style.transform = "translateX(0)";
-                activePane = null;
-            }
-            btnBack.classList.add("hidden");
-            if (title) title.classList.add("hidden");
+        // Back button logic
+        if (btnBack) {
+            const newBtnBack = btnBack.cloneNode(true) as HTMLButtonElement;
+            btnBack.parentNode?.replaceChild(newBtnBack, btnBack);
+            newBtnBack.addEventListener("click", closeSubPane);
+        }
+
+        // Auto-close drawer and reset panes when a link is clicked
+        mobileLinks.forEach((link) => {
+            const newLink = link.cloneNode(true) as HTMLAnchorElement;
+            link.parentNode?.replaceChild(newLink, link);
+
+            newLink.addEventListener("click", () => {
+                if (drawerCheckbox) drawerCheckbox.checked = false;
+                setTimeout(closeSubPane, 300); // Wait for sliding animation to finish
+            });
         });
     }
+
+    initMobileDrawer();
+    document.addEventListener("astro:page-load", initMobileDrawer);
 </script>

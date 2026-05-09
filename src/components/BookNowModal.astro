@@ -1,0 +1,83 @@
+---
+// src/components/BookNowModal.astro
+---
+
+<dialog id="book_now_modal" class="modal modal-bottom sm:modal-middle z-[999]">
+    <div class="modal-box">
+        <form method="dialog">
+            <button
+                class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                aria-label="Close modal">✕</button
+            >
+        </form>
+
+        <h3 class="font-bold text-2xl text-primary tracking-tight">
+            Book a Connection
+        </h3>
+        <p class="py-2 text-sm opacity-70 mb-4">
+            Leave your details below and our team will contact you for a
+            feasibility check.
+        </p>
+
+        <form
+            id="booking-form"
+            class="flex flex-col gap-4"
+            onsubmit="event.preventDefault(); alert('Form Submitted!'); document.getElementById('book_now_modal').close();"
+        >
+            <div class="form-control w-full">
+                <label class="label"
+                    ><span class="label-text font-bold">Full Name</span></label
+                >
+                <input
+                    type="text"
+                    placeholder="e.g. Ahmad Hassan"
+                    class="input input-bordered w-full"
+                    required
+                />
+            </div>
+
+            <div class="form-control w-full">
+                <label class="label"
+                    ><span class="label-text font-bold">Phone Number</span
+                    ></label
+                >
+                <input
+                    type="tel"
+                    placeholder="03XX-XXXXXXX"
+                    class="input input-bordered w-full"
+                    required
+                />
+            </div>
+
+            <div class="form-control w-full">
+                <label class="label"
+                    ><span class="label-text font-bold">Desired Service</span
+                    ></label
+                >
+                <select class="select select-bordered w-full" required>
+                    <option disabled selected value="">Select a service</option>
+                    <option>Fiber Internet</option>
+                    <option>Wireless Broadband</option>
+                </select>
+            </div>
+
+            <div class="form-control w-full">
+                <label class="label"
+                    ><span class="label-text font-bold">Address</span></label
+                >
+                <textarea
+                    class="textarea textarea-bordered h-24"
+                    placeholder="Enter your full installation address..."
+                    required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-full mt-4 text-lg"
+                >Submit Request</button
+            >
+        </form>
+    </div>
+
+    <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+    </form>
+</dialog>

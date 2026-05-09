@@ -1,0 +1,81 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+    <div class="max-w-4xl mx-auto px-4 lg:px-8 py-16 lg:py-24">
+        <div class="prose prose-base lg:prose-lg text-base-content max-w-none">
+            <h1 class="text-4xl font-black tracking-tighter text-primary mb-8">
+                Privacy Policy
+            </h1>
+            <p class="text-sm opacity-70 mb-8">
+                Last Updated: {new Date().toLocaleDateString()}
+            </p>
+
+            <p>
+                At Barq Telecommunication Pvt Ltd., protecting your privacy and
+                ensuring the security of your data is a top priority. This
+                Privacy Policy outlines how we collect, use, and safeguard your
+                personal information when you use our services.
+            </p>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4">Information We Collect</h2>
+            <p>
+                To provide you with reliable telecommunications and internet
+                services, we may collect the following:
+            </p>
+            <ul>
+                <li>
+                    <strong>Personal Details:</strong> Name, address, email, and phone
+                    number provided during registration.
+                </li>
+                <li>
+                    <strong>Billing Information:</strong> Payment details, transaction
+                    history, and subscription status.
+                </li>
+                <li>
+                    <strong>Network Usage Data:</strong> IP addresses, bandwidth consumption,
+                    and diagnostic data necessary for network optimization and troubleshooting.
+                </li>
+            </ul>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4">
+                How We Use Your Information
+            </h2>
+            <p>
+                We do not sell your personal data. We use the information we
+                collect strictly to:
+            </p>
+            <ul>
+                <li>
+                    Deliver, maintain, and improve our fiber and wireless
+                    network infrastructure.
+                </li>
+                <li>Process billing and subscription management.</li>
+                <li>Provide customer care and technical support.</li>
+                <li>
+                    Communicate service updates, outages, or security alerts.
+                </li>
+            </ul>
+
+            <h2 class="text-2xl font-bold mt-8 mb-4">Data Security</h2>
+            <p>
+                Barq implements industry-standard security measures, including
+                encryption and strict access controls, to protect your personal
+                and billing information against unauthorized access, alteration,
+                or disclosure.
+            </p>
+
+            <div class="mt-12 p-6 bg-base-200 rounded-xl">
+                <p class="font-bold m-0">Data Privacy Concerns?</p>
+                <p class="text-sm mt-2 mb-0">
+                    If you wish to update your data or have questions about our
+                    privacy practices, please <a
+                        href="/contact"
+                        class="text-primary hover:underline">contact us</a
+                    >.
+                </p>
+            </div>
+        </div>
+    </div>
+</Layout>
