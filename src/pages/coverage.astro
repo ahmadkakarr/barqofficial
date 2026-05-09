@@ -80,7 +80,6 @@ const bahriaOrchardAreas = coveredAreas.filter(
     (a) => a.zone === "Bahria Orchard",
 );
 
-// We serialize this to pass it safely to the client-side JavaScript
 const serializedAreas = JSON.stringify(coveredAreas);
 ---
 
@@ -118,44 +117,111 @@ const serializedAreas = JSON.stringify(coveredAreas);
             class="px-4 lg:px-8 max-w-[1440px] mx-auto flex flex-col gap-4"
         >
             <div
-                class="block lg:hidden w-full relative z-40"
-                id="mobile-combobox"
+                class="block lg:hidden w-full relative z-40 bg-base-200/50 p-4 rounded-3xl border border-base-300 shadow-sm"
+                id="mobile-controls"
             >
-                <label class="label px-1 py-1"
-                    ><span
-                        class="label-text font-bold text-xs uppercase tracking-wider text-base-content/50"
-                        >Find your sector</span
-                    ></label
-                >
-                <div class="relative">
-                    <input
-                        type="text"
-                        id="mobile-sector-input"
-                        placeholder="Select or search sector..."
-                        class="input input-bordered w-full pr-10 pl-4 rounded-xl shadow-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 bg-base-100 font-medium cursor-pointer"
-                        autocomplete="off"
-                    />
-                    <div
-                        class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-5 w-5 text-base-content/50"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            ><path
-                                fill-rule="evenodd"
-                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                clip-rule="evenodd"></path></svg
+                <div class="flex flex-col gap-3">
+                    <div class="form-control">
+                        <label class="label py-1 px-1"
+                            ><span
+                                class="label-text font-bold text-[10px] uppercase tracking-widest text-base-content/50"
+                                >1. Select Zone</span
+                            ></label
                         >
+                        <select
+                            id="mobile-zone-select"
+                            class="select select-bordered w-full rounded-xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 bg-base-100 font-bold shadow-sm"
+                        >
+                            <option value="none" disabled selected
+                                >Choose a zone...</option
+                            >
+                            <option value="Bahria Town"
+                                >Bahria Town (Fiber)</option
+                            >
+                            <option value="Bahria Orchard"
+                                >Bahria Orchard (Wireless)</option
+                            >
+                        </select>
+                    </div>
+
+                    <div
+                        class="form-control relative"
+                        id="mobile-sector-container"
+                    >
+                        <label class="label py-1 px-1"
+                            ><span
+                                class="label-text font-bold text-[10px] uppercase tracking-widest text-base-content/50"
+                                >2. Select Sector</span
+                            ></label
+                        >
+
+                        <button
+                            type="button"
+                            id="mobile-sector-toggle"
+                            class="input input-bordered w-full rounded-xl shadow-sm bg-base-100 flex items-center justify-between font-medium opacity-50 cursor-not-allowed transition-all"
+                            disabled
+                        >
+                            <span
+                                id="mobile-sector-toggle-text"
+                                class="truncate text-base-content/70"
+                                >Select a zone first...</span
+                            >
+                            <svg
+                                id="mobile-sector-chevron"
+                                xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 text-base-content/50 transition-transform duration-200"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                ><path
+                                    fill-rule="evenodd"
+                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"></path></svg
+                            >
+                        </button>
+
+                        <div
+                            id="mobile-sector-dropdown"
+                            class="absolute top-[100%] left-0 w-full mt-2 bg-base-100 border border-base-300 rounded-2xl shadow-2xl z-50 flex flex-col hidden overflow-hidden origin-top transition-all"
+                        >
+                            <div
+                                class="p-2 border-b border-base-200 bg-base-200/30"
+                            >
+                                <div class="relative">
+                                    <div
+                                        class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                                    >
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            class="h-4 w-4 text-base-content/50"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                            ><path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2.5"
+                                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                            ></path></svg
+                                        >
+                                    </div>
+                                    <input
+                                        type="text"
+                                        id="mobile-sector-search"
+                                        placeholder="Search sectors..."
+                                        class="input input-sm w-full pl-9 rounded-lg focus:outline-none focus:border-primary bg-base-100"
+                                        autocomplete="off"
+                                    />
+                                </div>
+                            </div>
+
+                            <ul
+                                id="mobile-sector-list"
+                                class="menu w-full p-2 max-h-[35vh] overflow-y-auto custom-scrollbar flex-nowrap gap-1"
+                            >
+                            </ul>
+                        </div>
                     </div>
                 </div>
-
-                <ul
-                    id="mobile-sector-dropdown"
-                    class="menu bg-base-100 border border-base-300 w-full rounded-2xl absolute z-50 shadow-2xl max-h-[40vh] overflow-y-auto mt-2 hidden flex-nowrap p-2 gap-1"
-                >
-                </ul>
             </div>
 
             <div class="flex flex-col lg:flex-row gap-6 lg:gap-8 w-full">
@@ -328,16 +394,19 @@ const serializedAreas = JSON.stringify(coveredAreas);
         const dataEl = document.getElementById("coverage-data");
         if (!mapContainer || !dataEl || typeof window.L === "undefined") return;
 
-        // Parse the areas data injected by Astro
         const areas = JSON.parse(dataEl.getAttribute("data-areas") || "[]");
 
         destroyMap();
 
-        // 1. Initialize Map
+        // 1. Initialize Map (GHOSTED ATTRIBUTION)
         map = window.L.map("coverage-map", {
             zoomControl: false,
             scrollWheelZoom: true,
+            attributionControl: false, // Disable default to remove Leaflet prefix
         }).setView([31.34, 74.2], 12);
+
+        // Add pure OSM attribution back in (We style this in CSS to be ghosted)
+        window.L.control.attribution({ prefix: false }).addTo(map);
 
         window.L.control.zoom({ position: "topright" }).addTo(map);
         window.L.tileLayer(
@@ -387,7 +456,7 @@ const serializedAreas = JSON.stringify(coveredAreas);
             });
         }
 
-        // Shared function to trigger map flyTo and popup
+        // Shared map fly function
         function selectArea(id) {
             const area = areas.find((a: any) => a.id === id);
             if (!area) return;
@@ -421,14 +490,13 @@ const serializedAreas = JSON.stringify(coveredAreas);
                 .openPopup();
         }
 
-        // 4. DESKTOP FILTER LOGIC
+        // 4. DESKTOP FILTER LOGIC (Remains exactly the same)
         const desktopFilter = document.getElementById(
             "desktop-sector-filter",
         ) as HTMLInputElement;
         if (desktopFilter) {
             const newFilter = desktopFilter.cloneNode(true) as HTMLInputElement;
             desktopFilter.parentNode?.replaceChild(newFilter, desktopFilter);
-
             newFilter.addEventListener("input", (e) => {
                 const term = (e.target as HTMLInputElement).value.toLowerCase();
                 let totalVisible = 0;
@@ -463,88 +531,117 @@ const serializedAreas = JSON.stringify(coveredAreas);
             );
         });
 
-        // 5. MOBILE STRICT COMBOBOX LOGIC
-        const mobileContainer = document.getElementById("mobile-combobox");
-        const mobileInput = document.getElementById(
-            "mobile-sector-input",
+        // 5. MOBILE 2-STEP UX LOGIC
+        const zoneSelect = document.getElementById(
+            "mobile-zone-select",
+        ) as HTMLSelectElement;
+        const sectorToggle = document.getElementById(
+            "mobile-sector-toggle",
+        ) as HTMLButtonElement;
+        const toggleText = document.getElementById("mobile-sector-toggle-text");
+        const chevron = document.getElementById("mobile-sector-chevron");
+        const dropdownPanel = document.getElementById("mobile-sector-dropdown");
+        const sectorSearch = document.getElementById(
+            "mobile-sector-search",
         ) as HTMLInputElement;
-        const mobileDropdown = document.getElementById(
-            "mobile-sector-dropdown",
-        );
+        const sectorList = document.getElementById("mobile-sector-list");
+        const container = document.getElementById("mobile-sector-container");
 
-        if (mobileContainer && mobileInput && mobileDropdown) {
-            let lastSelectedValue = "";
+        if (
+            zoneSelect &&
+            sectorToggle &&
+            dropdownPanel &&
+            sectorList &&
+            container &&
+            sectorSearch
+        ) {
+            let currentZoneAreas = [];
+            let isDropdownOpen = false;
 
-            function renderMobileOptions(filterText = "") {
-                mobileDropdown.innerHTML = "";
-                const term = filterText.toLowerCase();
+            function closeDropdown() {
+                isDropdownOpen = false;
+                dropdownPanel.classList.add("hidden");
+                if (chevron) chevron.classList.remove("rotate-180");
+            }
 
-                const filtered = areas.filter(
-                    (a: any) =>
-                        a.name.toLowerCase().includes(term) ||
-                        a.zone.toLowerCase().includes(term),
+            function openDropdown() {
+                if (sectorToggle.disabled) return;
+                isDropdownOpen = true;
+                dropdownPanel.classList.remove("hidden");
+                if (chevron) chevron.classList.add("rotate-180");
+            }
+
+            function renderSectors(filterTerm = "") {
+                sectorList.innerHTML = "";
+                const term = filterTerm.toLowerCase();
+                const filtered = currentZoneAreas.filter((a: any) =>
+                    a.name.toLowerCase().includes(term),
                 );
 
                 if (filtered.length === 0) {
-                    mobileDropdown.innerHTML = `<li class="px-4 py-3 text-sm opacity-50 font-medium">No matches found</li>`;
+                    sectorList.innerHTML = `<li class="px-4 py-3 text-sm opacity-50 font-medium">No sectors found.</li>`;
                     return;
                 }
 
                 filtered.forEach((area: any) => {
                     const li = document.createElement("li");
-                    const colorClass =
-                        area.type === "fiber"
-                            ? "text-[#4F46E5]"
-                            : "text-[#0EA5E9]";
-
+                    li.className = "w-full";
                     li.innerHTML = `
-                        <button class="flex flex-col items-start px-4 py-2 hover:bg-base-200 transition-colors w-full text-left rounded-xl">
+                        <button class="flex flex-col items-start px-4 py-3 hover:bg-base-200 transition-colors w-full text-left rounded-xl">
                             <span class="font-bold text-base text-base-content">${area.name}</span>
-                            <span class="text-xs font-semibold ${colorClass} uppercase tracking-wider">${area.zone}</span>
                         </button>
                     `;
-
                     li.querySelector("button")?.addEventListener(
                         "click",
                         () => {
-                            const val = `${area.name} (${area.zone})`;
-                            mobileInput.value = val;
-                            lastSelectedValue = val; // Store valid selection
-                            mobileDropdown.classList.add("hidden");
+                            if (toggleText) toggleText.innerText = area.name;
+                            closeDropdown();
                             selectArea(area.id);
                         },
                     );
-
-                    mobileDropdown.appendChild(li);
+                    sectorList.appendChild(li);
                 });
             }
 
-            const newMobileInput = mobileInput.cloneNode(
-                true,
-            ) as HTMLInputElement;
-            mobileInput.parentNode?.replaceChild(newMobileInput, mobileInput);
+            // Step 1: Zone changes
+            zoneSelect.addEventListener("change", () => {
+                const zone = zoneSelect.value;
+                currentZoneAreas = areas.filter((a: any) => a.zone === zone);
 
-            // Show all on click
-            newMobileInput.addEventListener("focus", () => {
-                newMobileInput.value = ""; // Clear to show full list instantly
-                renderMobileOptions("");
-                mobileDropdown.classList.remove("hidden");
+                // Enable Step 2
+                sectorToggle.disabled = false;
+                sectorToggle.classList.remove(
+                    "opacity-50",
+                    "cursor-not-allowed",
+                );
+                sectorToggle.classList.add("cursor-pointer");
+                if (toggleText) {
+                    toggleText.innerText = `Select a sector in ${zone}...`;
+                    toggleText.classList.remove("text-base-content/70");
+                    toggleText.classList.add("text-base-content");
+                }
+
+                sectorSearch.value = "";
+                renderSectors("");
+                closeDropdown();
             });
 
-            // Filter on type
-            newMobileInput.addEventListener("input", (e) => {
-                renderMobileOptions((e.target as HTMLInputElement).value);
-                mobileDropdown.classList.remove("hidden");
+            // Step 2: Toggle Sector Menu
+            sectorToggle.addEventListener("click", (e) => {
+                e.stopPropagation();
+                if (isDropdownOpen) closeDropdown();
+                else openDropdown();
             });
 
-            // Strict fallback: if they click away without picking a valid option, revert
+            // Step 3: Search within Menu
+            sectorSearch.addEventListener("input", (e) => {
+                renderSectors((e.target as HTMLInputElement).value);
+            });
+
+            // Close on outside click
             document.addEventListener("click", (e) => {
-                if (!mobileContainer.contains(e.target as Node)) {
-                    mobileDropdown.classList.add("hidden");
-                    // If they typed junk, revert to last known good selection
-                    if (newMobileInput.value !== lastSelectedValue) {
-                        newMobileInput.value = lastSelectedValue;
-                    }
+                if (isDropdownOpen && !container.contains(e.target as Node)) {
+                    closeDropdown();
                 }
             });
         }
@@ -581,5 +678,22 @@ const serializedAreas = JSON.stringify(coveredAreas);
     .leaflet-container {
         font-family: inherit;
         z-index: 0 !important;
+    }
+
+    /* GHOSTED ATTRIBUTION CSS: Legally compliant, but visually invisible */
+    .leaflet-control-attribution {
+        background-color: transparent !important;
+        color: var(--fallback-bc, oklch(var(--bc) / 0.3)) !important;
+        font-size: 9px !important;
+        text-shadow: none !important;
+        box-shadow: none !important;
+        pointer-events: auto;
+    }
+    .leaflet-control-attribution a {
+        color: inherit !important;
+        text-decoration: none !important;
+    }
+    .leaflet-control-attribution a:hover {
+        text-decoration: underline !important;
     }
 </style>
